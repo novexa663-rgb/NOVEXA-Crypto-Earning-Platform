@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>NOVEXA — Next Level Crypto Earning</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800;900&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:#000;color:#9CA3AF;font-family:'DM Sans',sans-serif;overflow-x:hidden;}
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-thumb{background:#7C3AED;}
+
+/* ═══ INTRO SPLASH ═══ */
+#intro{
+  position:fixed;inset:0;z-index:9999;
+  display:flex;align-items:center;justify-content:center;
+  background:#000;overflow:hidden;
+  transition:opacity 1s ease,transform 1s ease;
+}
+#intro.exit{opacity:0;transform:scale(1.06);pointer-events:none;}
+.i-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 80% at 50% 50%,#0a001f 0%,#000 75%);}
+.i-hex{position:absolute;inset:0;background-image:repeating-linear-gradient(60deg,#7B2FFF08 0,#7B2FFF08 1px,transparent 1px,transparent 30px),repeating-linear-gradient(120deg,#7B2FFF08 0,#7B2FFF08 1px,transparent 1px,transparent 30px);}
+.i-ring{position:absolute;border-radius:50%;border:1px solid transparent;animation:iSpin linear infinite;}
+.ir1{width:82vmin;height:82vmin;border-top-color:#7B2FFF;border-right-color:#7B2FFF33;animation-duration:8s;}
+.ir2{width:70vmin;height:70vmin;border-bottom-color:#00E5FF;border-left-color:#00E5FF33;animation-duration:12s;animation-direction:reverse;}
+.ir3{width:58vmin;height:58vmin;border-top-color:#FF2D78;border-left-color:#FF2D7833;animation-duration:6s;}
+@keyframes iSpin{to{transform:rotate(360deg)}}
+.i-orb{position:absolute;border-radius:50%;filter:blur(55px);}
+.io1{width:50vmin;height:50vmin;background:#7B2FFF22;top:50%;left:50%;transform:translate(-50%,-50%);animation:io1a 4s ease-in-out infinite;}
+.io2{width:30vmin;height:30vmin;background:#00E5FF18;top:15%;left:10%;animation:io2a 5s 1s ease-in-out infinite;}
+.io3{width:25vmin;height:25vmin;background:#FF2D7818;bottom:15%;right:10%;animation:io2a 5s 2.5s ease-in-out infinite;}
+@keyframes io1a{0%,100%{opacity:.5;transform:translate(-50%,-50%) scale(1)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.15)}}
+@keyframes io2a{0%,100%{opacity:.4;transform:scale(1)}50%{opacity:.8;transform:scale(1.2)}}
+.i-scan{position:absolute;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#00E5FF55 30%,#00E5FFaa 50%,#00E5FF55 70%,transparent);animation:iScanMove 5s linear infinite;pointer-events:none;}
+@keyframes iScanMove{0%{top:0;opacity:0}5%{opacity:1}95%{opacity:1}100%{top:100%;opacity:0}}
+.i-parts{position:absolute;inset:0;pointer-events:none;}
+.i-part{position:absolute;border-radius:50%;animation:iPart linear infinite;}
+@keyframes iPart{0%{opacity:0;transform:translateY(0) scale(0)}10%{opacity:1;transform:scale(1)}90%{opacity:.4}100%{opacity:0;transform:translateY(-100vh) scale(0)}}
+.i-corner{position:absolute;width:clamp(24px,5vmin,48px);height:clamp(24px,5vmin,48px);}
+.i-corner svg{width:100%;height:100%;}
+.ctl{top:20px;left:20px;}
+.ctr{top:20px;right:20px;transform:scaleX(-1);}
+.cbl{bottom:20px;left:20px;transform:scaleY(-1);}
+.cbr{bottom:20px;right:20px;transform:scale(-1);}
+.i-data{position:absolute;font-family:'JetBrains Mono',monospace;font-size:clamp(6px,1.1vmin,10px);color:#7B2FFF44;letter-spacing:3px;writing-mode:vertical-lr;top:50%;transform:translateY(-50%);animation:iDataPulse 4s ease-in-out infinite;}
+.id-l{left:20px;}.id-r{right:20px;transform:translateY(-50%) rotate(180deg);}
+@keyframes iDataPulse{0%,100%{color:#7B2FFF33}50%{color:#7B2FFF88}}
+.i-center{position:relative;z-index:10;display:flex;flex-direction:column;align-items:center;gap:clamp(6px,2vmin,18px);padding:0 20px;text-align:center;}
+.i-diamond-wrap{width:clamp(50px,12vmin,90px);height:clamp(50px,12vmin,90px);position:relative;animation:iFloat 3s ease-in-out infinite;}
+@keyframes iFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.i-diamond{position:absolute;top:50%;left:50%;width:58%;height:58%;transform:translate(-50%,-50%);clip-path:polygon(50% 0%,100% 50%,50% 100%,0% 50%);background:linear-gradient(135deg,#7B2FFF,#00E5FF);animation:iDGlow 2s ease-in-out infinite;}
+@keyframes iDGlow{0%,100%{filter:drop-shadow(0 0 12px #7B2FFF)}50%{filter:drop-shadow(0 0 30px #00E5FF)}}
+.i-diamond-inner{position:absolute;top:50%;left:50%;width:50%;height:50%;transform:translate(-50%,-50%);clip-path:polygon(50% 0%,100% 50%,50% 100%,0% 50%);background:linear-gradient(135deg,#00E5FF,#FF2D78);animation:iDHue 6s linear infinite;}
+@keyframes iDHue{to{filter:hue-rotate(360deg)}}
+.i-sep{display:flex;align-items:center;gap:10px;width:clamp(160px,50vmin,380px);}
+.i-sep-line{flex:1;height:1px;background:linear-gradient(90deg,transparent,#7B2FFF88,transparent);}
+.i-sep-dot{width:5px;height:5px;background:#00E5FF;border-radius:50%;box-shadow:0 0 10px #00E5FF;animation:iDotPulse 2s ease-in-out infinite;}
+@keyframes iDotPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.8)}}
+.i-brand{font-family:'Syne',sans-serif;font-weight:900;font-size:clamp(36px,11vmin,90px);letter-spacing:clamp(4px,2vmin,18px);background:linear-gradient(90deg,#7B2FFF 0%,#00E5FF 40%,#FF2D78 70%,#7B2FFF 100%);background-size:200%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:iBrandShift 4s linear infinite;filter:drop-shadow(0 0 20px #7B2FFF88);white-space:nowrap;}
+@keyframes iBrandShift{0%{background-position:0%}100%{background-position:200%}}
+.i-tagline{font-family:'DM Sans',sans-serif;font-weight:300;font-size:clamp(8px,1.8vmin,13px);letter-spacing:clamp(4px,1.5vmin,10px);color:#00E5FF88;text-transform:uppercase;}
+.i-btn{margin-top:clamp(18px,3.5vmin,36px);background:linear-gradient(135deg,#7B2FFF,#00E5FF);border:none;padding:clamp(12px,2vmin,18px) clamp(30px,6vmin,56px);font-family:'Syne',sans-serif;font-size:clamp(10px,1.8vmin,14px);font-weight:700;letter-spacing:3px;color:#fff;cursor:pointer;text-transform:uppercase;transition:all .3s;animation:iBtnGlow 2s ease-in-out infinite;}
+@keyframes iBtnGlow{0%,100%{box-shadow:0 0 20px #7B2FFF66}50%{box-shadow:0 0 50px #7B2FFFcc,0 0 80px #00E5FF44}}
+.i-btn:hover{transform:scale(1.07);}
+.i-countdown{font-family:'JetBrains Mono',monospace;font-size:clamp(8px,1.2vmin,11px);color:#ffffff22;letter-spacing:2px;margin-top:10px;}
+.i-countdown b{color:#00E5FF66;}
+
+/* ═══ MAIN SITE ═══ */
+:root{
+  --v:#7C3AED;--v2:#A855F7;--v3:#C084FC;
+  --gold:#F59E0B;--gold2:#FBBF24;--pink:#EC4899;
+  --bg:#030305;--bg2:#06060A;--bg3:#0c0c14;--card:#0d0d18;
+  --border:rgba(124,58,237,0.22);--border2:rgba(255,255,255,0.055);
+  --text:#9CA3AF;--white:#F9FAFB;
+}
+#site{display:none;}
+
+/* GRID BG */
+#site::before{content:'';position:fixed;inset:0;z-index:0;background-image:linear-gradient(rgba(124,58,237,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(124,58,237,.03) 1px,transparent 1px);background-size:55px 55px;pointer-events:none;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:18px 5%;display:flex;align-items:center;justify-content:space-between;background:rgba(0,0,0,.8);backdrop-filter:blur(24px);border-bottom:1px solid var(--border2);}
+.logo{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:900;letter-spacing:4px;color:#fff;position:relative;z-index:1;}
+.logo em{color:transparent;background:linear-gradient(135deg,var(--v2),var(--pink));-webkit-background-clip:text;background-clip:text;font-style:normal;}
+.logo-dot{display:inline-block;width:5px;height:5px;background:var(--gold);border-radius:50%;margin-left:2px;vertical-align:super;animation:blink 1.5s infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.nav-links{display:flex;gap:28px;list-style:none;}
+.nav-links a{color:var(--text);text-decoration:none;font-size:.82rem;font-weight:500;letter-spacing:.5px;transition:color .2s;}
+.nav-links a:hover{color:#fff;}
+.nav-links a.gold{color:var(--gold);}
+.nav-cta{background:linear-gradient(135deg,var(--v),var(--v2));border:none;padding:10px 26px;font-family:'Syne',sans-serif;font-size:.74rem;font-weight:700;letter-spacing:2px;color:#fff;cursor:pointer;transition:all .2s;}
+.nav-cta:hover{opacity:.85;transform:translateY(-1px);}
+
+/* HERO */
+.hero{position:relative;z-index:1;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:140px 5% 100px;overflow:hidden;}
+.hero-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:700px;height:700px;background:radial-gradient(circle,rgba(124,58,237,.15) 0%,rgba(0,229,255,.06) 40%,transparent 70%);pointer-events:none;animation:hGlow 4s ease-in-out infinite;}
+@keyframes hGlow{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(1.1)}}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(124,58,237,.1);border:1px solid rgba(124,58,237,.35);padding:7px 18px;border-radius:100px;font-size:.7rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--v3);margin-bottom:32px;animation:fadeUp .8s ease both;}
+.badge-dot{width:6px;height:6px;background:var(--pink);border-radius:50%;animation:blink 1s infinite;}
+h1.hero-title{font-family:'Syne',sans-serif;font-size:clamp(2.6rem,7vw,6rem);font-weight:900;line-height:.95;letter-spacing:-2px;color:#fff;margin-bottom:28px;animation:fadeUp .8s .1s ease both;}
+.hero-title .grad{display:block;color:transparent;background:linear-gradient(135deg,var(--v2) 0%,var(--pink) 45%,var(--gold) 100%);-webkit-background-clip:text;background-clip:text;background-size:200%;animation:gradShift 3s ease infinite;}
+@keyframes gradShift{0%,100%{background-position:0%}50%{background-position:100%}}
+.hero-sub{font-size:1.05rem;line-height:1.8;color:var(--text);max-width:520px;margin:0 auto 44px;animation:fadeUp .8s .25s ease both;}
+.hero-sub strong{color:#fff;font-weight:600;}
+.hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;animation:fadeUp .8s .4s ease both;}
+.btn-main{background:linear-gradient(135deg,var(--v),var(--v2));border:none;padding:15px 38px;font-family:'Syne',sans-serif;font-size:.8rem;font-weight:700;letter-spacing:2px;color:#fff;cursor:pointer;transition:all .25s;}
+.btn-main:hover{opacity:.85;transform:translateY(-3px);box-shadow:0 14px 40px rgba(124,58,237,.45);}
+.btn-ghost{background:transparent;border:1px solid rgba(255,255,255,.15);padding:15px 38px;font-family:'Syne',sans-serif;font-size:.8rem;font-weight:700;letter-spacing:2px;color:#fff;cursor:pointer;transition:all .25s;}
+.btn-ghost:hover{border-color:var(--v2);background:rgba(124,58,237,.08);transform:translateY(-3px);}
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+
+/* TICKER */
+.ticker-wrap{position:relative;z-index:1;background:rgba(124,58,237,.05);border-top:1px solid var(--border);border-bottom:1px solid var(--border);overflow:hidden;display:flex;align-items:center;}
+.ticker-lbl{background:linear-gradient(135deg,var(--v),var(--v2));padding:15px 22px;font-family:'Syne',sans-serif;font-size:.68rem;font-weight:700;letter-spacing:2px;color:#fff;white-space:nowrap;flex-shrink:0;}
+.ticker-track{overflow:hidden;flex:1;}
+.ticker-inner{display:flex;width:max-content;animation:ticker 28s linear infinite;}
+@keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.ti{padding:15px 36px;font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:700;color:var(--text);border-right:1px solid var(--border2);white-space:nowrap;}
+.ti b{color:var(--gold);}
+
+/* STATS */
+.stats{position:relative;z-index:1;padding:70px 5%;}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border2);border:1px solid var(--border2);max-width:900px;margin:0 auto;}
+.stat{background:var(--bg2);padding:38px 20px;text-align:center;transition:background .3s;}
+.stat:hover{background:var(--bg3);}
+.stat-n{font-family:'JetBrains Mono',monospace;font-size:2.4rem;font-weight:700;display:block;margin-bottom:5px;line-height:1;}
+.stat-n.gold{color:var(--gold);}
+.stat-n.violet{color:var(--v3);}
+.stat-n.pink{color:var(--pink);}
+.stat-n.white{color:#fff;}
+.stat-l{font-size:.7rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--text);}
+
+/* SECTIONS */
+.sec{position:relative;z-index:1;padding:90px 5%;}
+.sec.alt{background:rgba(255,255,255,.012);}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:.66rem;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--v3);margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+.eyebrow::before{content:'';width:20px;height:1px;background:var(--v2);}
+.sec-title{font-family:'Syne',sans-serif;font-size:clamp(1.8rem,4vw,3rem);font-weight:800;color:#fff;line-height:1.05;letter-spacing:-1px;margin-bottom:18px;}
+.sec-title em{color:transparent;background:linear-gradient(135deg,var(--v2),var(--pink));-webkit-background-clip:text;background-clip:text;font-style:normal;}
+.sec-title .ge{color:transparent;background:linear-gradient(135deg,var(--gold),var(--gold2));-webkit-background-clip:text;background-clip:text;font-style:normal;}
+.sec-sub{font-size:.98rem;line-height:1.8;color:var(--text);max-width:520px;margin-bottom:56px;}
+.tc{text-align:center;}.tc .eyebrow{justify-content:center;}.tc .eyebrow::before{display:none;}.tc .sec-sub{margin-left:auto;margin-right:auto;}
+
+/* PACKAGES */
+.pkg-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2px;background:var(--border2);max-width:860px;margin:0 auto;}
+.pkg{background:var(--card);padding:44px 36px;position:relative;overflow:hidden;transition:transform .3s;}
+.pkg:hover{transform:translateY(-5px);}
+.pkg::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--v),transparent);}
+.pkg.hot::before{background:linear-gradient(90deg,var(--v),var(--pink),var(--gold));}
+.pkg-chip{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:.6rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:4px 12px;border-radius:100px;margin-bottom:18px;}
+.chip-s{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.3);color:var(--gold);}
+.chip-u{background:linear-gradient(135deg,var(--v),var(--pink));color:#fff;border:none;}
+.pkg-price{font-family:'Syne',sans-serif;font-size:3.8rem;font-weight:900;color:#fff;line-height:1;letter-spacing:-2px;margin-bottom:4px;}
+.pkg-price sup{font-size:1.4rem;color:var(--gold);vertical-align:super;}
+.pkg-name{font-family:'JetBrains Mono',monospace;font-size:.66rem;font-weight:700;letter-spacing:3px;color:var(--v3);text-transform:uppercase;padding-bottom:24px;margin-bottom:28px;border-bottom:1px solid var(--border2);}
+.pkg-list{list-style:none;margin-bottom:36px;}
+.pkg-list li{padding:11px 0;font-size:.93rem;color:var(--text);display:flex;gap:10px;align-items:flex-start;border-bottom:1px solid rgba(255,255,255,.03);}
+.pkg-list li strong{color:#fff;font-weight:600;}
+.pkg-list li .ic{flex-shrink:0;margin-top:2px;}
+.pkg-tag{background:rgba(124,58,237,.08);border:1px solid rgba(124,58,237,.2);padding:12px 16px;margin-bottom:28px;font-size:.86rem;font-weight:600;color:var(--v3);}
+.btn-p{width:100%;padding:15px;font-family:'Syne',sans-serif;font-size:.76rem;font-weight:700;letter-spacing:2px;cursor:pointer;transition:all .25s;text-transform:uppercase;}
+.btn-ps{background:transparent;border:1px solid rgba(255,255,255,.15);color:var(--text);}
+.btn-ps:hover{border-color:var(--v2);color:#fff;background:rgba(124,58,237,.08);}
+.btn-pu{background:linear-gradient(135deg,var(--v),var(--v2));border:none;color:#fff;}
+.btn-pu:hover{opacity:.85;box-shadow:0 10px 36px rgba(124,58,237,.45);}
+
+/* INCOME */
+.inc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:2px;background:var(--border2);}
+.inc{background:var(--card);padding:32px 28px;transition:all .3s;position:relative;overflow:hidden;}
+.inc:hover{transform:translateY(-3px);background:var(--bg3);}
+.inc-n{font-family:'JetBrains Mono',monospace;font-size:2.8rem;font-weight:700;background:linear-gradient(135deg,var(--v2),var(--pink));-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:12px;line-height:1;}
+.inc-t{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;color:#fff;margin-bottom:10px;}
+.inc-d{font-size:.86rem;line-height:1.65;color:var(--text);}
+.tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:14px;}
+.tag{font-size:.6rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:3px 9px;border-radius:100px;}
+.tv{background:rgba(124,58,237,.12);color:var(--v3);border:1px solid rgba(124,58,237,.28);}
+.tg{background:rgba(245,158,11,.1);color:var(--gold);border:1px solid rgba(245,158,11,.25);}
+.tp{background:rgba(236,72,153,.1);color:var(--pink);border:1px solid rgba(236,72,153,.25);}
+
+/* BINARY */
+.bin-wrap{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;}
+.bin-tree{display:flex;flex-direction:column;align-items:center;}
+.bn{font-family:'JetBrains Mono',monospace;font-size:.65rem;font-weight:700;padding:12px 20px;text-align:center;min-width:130px;letter-spacing:1px;}
+.bn-root{background:linear-gradient(135deg,var(--v),var(--v2));color:#fff;}
+.bn-l{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.35);color:var(--gold);}
+.bn-r{background:rgba(124,58,237,.1);border:1px solid rgba(124,58,237,.35);color:var(--v3);}
+.bn-sub{background:var(--bg3);border:1px solid var(--border2);color:var(--text);font-size:.6rem;min-width:100px;padding:9px 14px;}
+.bl{width:1px;height:28px;background:rgba(124,58,237,.3);}
+.br{display:flex;gap:40px;position:relative;}
+.br::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:160px;height:1px;background:rgba(124,58,237,.25);}
+.bc{display:flex;flex-direction:column;align-items:center;}
+.blbl{font-family:'JetBrains Mono',monospace;font-size:.58rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-top:6px;}
+.ll{color:var(--gold);}.rl{color:var(--v3);}
+.bin-badge{background:rgba(124,58,237,.08);border:1px solid rgba(124,58,237,.25);padding:14px 22px;font-family:'JetBrains Mono',monospace;font-size:.68rem;font-weight:700;color:var(--v3);text-align:center;margin-top:24px;animation:bbPulse 1.5s ease-in-out infinite;}
+@keyframes bbPulse{0%,100%{box-shadow:0 0 0 rgba(124,58,237,0)}50%{box-shadow:0 0 18px rgba(124,58,237,.35)}}
+.bin-info h3{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;color:#fff;letter-spacing:-1px;margin-bottom:28px;}
+.bin-info h3 em{color:transparent;background:linear-gradient(135deg,var(--gold),var(--gold2));-webkit-background-clip:text;background-clip:text;font-style:normal;}
+.bin-rules{list-style:none;}
+.bin-rule{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:flex-start;padding:16px 0;border-bottom:1px solid var(--border2);}
+.rn{font-family:'JetBrains Mono',monospace;font-size:.62rem;font-weight:700;color:#000;background:var(--v2);padding:3px 7px;flex-shrink:0;}
+.rt{font-size:.9rem;color:var(--text);line-height:1.6;}
+.rt strong{color:#fff;}
+
+/* PAYOUT */
+.pay-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--border2);}
+.pay-box{background:var(--card);padding:36px;}
+.pay-box h4{font-family:'Syne',sans-serif;font-size:.82rem;font-weight:700;color:var(--v3);letter-spacing:1px;margin-bottom:26px;line-height:1.5;}
+.bar-row{margin-bottom:20px;}
+.bar-lbl{display:flex;justify-content:space-between;font-size:.83rem;font-weight:500;margin-bottom:8px;}
+.bar-lbl span:last-child{font-family:'JetBrains Mono',monospace;font-weight:700;}
+.bar-track{height:7px;background:var(--bg3);}
+.bar-fill{height:100%;}
+.bv{background:linear-gradient(90deg,var(--v),var(--v2));width:80%;}
+.bp{background:linear-gradient(90deg,var(--gold),var(--gold2));width:20%;}
+.bg1{background:linear-gradient(90deg,var(--gold),var(--gold2));width:50%;}
+.bg2{background:linear-gradient(90deg,#f0b90b,#fcd535);width:50%;}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px;}
+.chip-c{display:flex;align-items:center;gap:6px;background:var(--bg3);border:1px solid var(--border2);padding:5px 13px;font-size:.73rem;font-weight:600;color:#fff;}
+.cdot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+.dv{background:var(--v2);}.dg{background:var(--gold);}.dp{background:var(--pink);}.db{background:#f0b90b;}
+
+/* WITHDRAWAL */
+.wd-wrap{background:var(--card);border:1px solid var(--border2);max-width:820px;margin:0 auto;overflow:hidden;}
+.wd-top{display:grid;grid-template-columns:repeat(3,1fr);}
+.wd-st{padding:40px 24px;text-align:center;position:relative;}
+.wd-st+.wd-st::before{content:'';position:absolute;left:0;top:20%;bottom:20%;width:1px;background:var(--border2);}
+.wd-n{font-family:'JetBrains Mono',monospace;font-size:2.4rem;font-weight:700;color:#fff;display:block;margin-bottom:5px;line-height:1;}
+.wd-l{font-size:.68rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--text);}
+.wd-bot{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--border2);}
+.wd-sec{padding:32px 36px;}
+.wd-sec+.wd-sec{border-left:1px solid var(--border2);}
+.wd-h{font-family:'JetBrains Mono',monospace;font-size:.62rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--v3);margin-bottom:14px;}
+.wd-t{font-size:.9rem;line-height:1.7;color:var(--text);}
+.wd-t strong{color:#fff;}
+
+/* HOW */
+.how-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;background:var(--border2);border:1px solid var(--border2);}
+.how-step{background:var(--card);padding:44px 28px;transition:background .3s;position:relative;}
+.how-step:hover{background:var(--bg3);}
+.how-step+.how-step::before{content:'';position:absolute;left:0;top:0;bottom:0;width:1px;background:var(--border2);}
+.how-n{font-family:'JetBrains Mono',monospace;font-size:.62rem;font-weight:700;color:var(--v3);letter-spacing:3px;display:flex;align-items:center;gap:8px;margin-bottom:22px;}
+.how-n::after{content:'';flex:1;height:1px;background:linear-gradient(to right,var(--border),transparent);}
+.how-icon{font-size:2rem;margin-bottom:18px;display:block;}
+.how-t{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;color:#fff;margin-bottom:10px;}
+.how-d{font-size:.84rem;line-height:1.65;color:var(--text);}
+
+/* VIDEO TUTORIAL */
+.vtut-player{background:#07040f;border:1px solid rgba(168,85,247,.35);overflow:hidden;max-width:860px;margin:0 auto;box-shadow:0 0 60px rgba(124,58,237,.15);}
+.vtut-header{display:flex;align-items:center;gap:8px;padding:11px 18px;background:rgba(0,0,0,.6);border-bottom:1px solid rgba(255,255,255,.05);}
+.vdot{width:10px;height:10px;border-radius:50%;}
+.vdot.r{background:#EC4899;}.vdot.y{background:#F59E0B;}.vdot.g{background:#10B981;}
+.vtut-title{font-family:'JetBrains Mono',monospace;font-size:.62rem;font-weight:700;letter-spacing:3px;color:rgba(168,85,247,.55);margin:0 auto;}
+.vtut-screen{position:relative;height:420px;overflow:hidden;cursor:pointer;background:#07040f;}
+.vscene{position:absolute;inset:0;display:none;align-items:flex-end;justify-content:center;padding:24px 32px 72px;}
+.vscene.act{display:flex!important;}
+.sc-bg{position:absolute;inset:0;}
+.sc-bg::after{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(168,85,247,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(168,85,247,.03) 1px,transparent 1px);background-size:38px 38px;}
+.sbg1{background:radial-gradient(ellipse at 30% 40%,rgba(124,58,237,.2),transparent 55%),radial-gradient(ellipse at 70% 60%,rgba(236,72,153,.1),transparent 50%),#07040f;}
+.sbg2{background:radial-gradient(ellipse at 20% 50%,rgba(245,158,11,.12),transparent 50%),radial-gradient(ellipse at 80% 50%,rgba(124,58,237,.15),transparent 50%),#06040f;}
+.sbg3{background:radial-gradient(ellipse at 50% 30%,rgba(16,185,129,.1),transparent 55%),radial-gradient(ellipse at 50% 70%,rgba(124,58,237,.15),transparent 55%),#04080f;}
+.sbg4{background:radial-gradient(ellipse at 50% 50%,rgba(245,158,11,.16),transparent 60%),#060407;}
+.sc-inner{position:relative;z-index:2;display:flex;align-items:flex-end;justify-content:center;gap:36px;width:100%;height:100%;}
+.char{flex-shrink:0;display:flex;align-items:flex-end;}
+.char svg{height:190px;overflow:visible;filter:drop-shadow(0 0 18px rgba(168,85,247,.3));animation:charBob 2s ease-in-out infinite;}
+@keyframes charBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.sc-vis{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;}
+/* Scene 1 */
+.s1logo{font-family:'Syne',sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:900;letter-spacing:5px;color:transparent;background:linear-gradient(135deg,#A855F7,#EC4899,#F59E0B);-webkit-background-clip:text;background-clip:text;animation:logoPulse 2s ease-in-out infinite;text-align:center;}
+@keyframes logoPulse{0%,100%{filter:drop-shadow(0 0 16px rgba(168,85,247,.8))}50%{filter:drop-shadow(0 0 36px rgba(236,72,153,.9))}}
+.s1tag{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:4px;color:var(--v3);text-align:center;text-transform:uppercase;}
+.s1coins{display:flex;gap:12px;margin-top:6px;}
+.s1c{font-size:1.7rem;animation:coinSpin 3s linear infinite;}
+@keyframes coinSpin{0%{transform:rotateY(0)}100%{transform:rotateY(360deg)}}
+.s1c:nth-child(2){animation-delay:.5s;}.s1c:nth-child(3){animation-delay:1s;}
+/* Scene 2 */
+.mini-cards{display:flex;gap:14px;align-items:center;}
+.mc{background:rgba(124,58,237,.08);border:1px solid rgba(124,58,237,.3);padding:16px 20px;text-align:center;min-width:106px;animation:cardPop .5s ease both;}
+.mc.gc{border-color:rgba(245,158,11,.4);background:rgba(245,158,11,.06);animation-delay:.3s;}
+@keyframes cardPop{from{transform:scale(.4) translateY(30px);opacity:0}to{transform:scale(1) translateY(0);opacity:1}}
+.mc-price{font-family:'Syne',sans-serif;font-size:1.7rem;font-weight:900;color:#fff;line-height:1;}
+.mc-price sup{font-size:.85rem;color:var(--gold);}
+.mc-name{font-family:'JetBrains Mono',monospace;font-size:.54rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--v3);margin-bottom:6px;}
+.mc-tag{font-size:.68rem;color:var(--text);}
+.mc-badge{display:inline-block;background:linear-gradient(135deg,var(--v),var(--pink));padding:2px 7px;font-size:.52rem;font-weight:700;letter-spacing:1px;color:#fff;margin-top:5px;}
+.cvs{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;color:var(--v3);animation:vsPulse 1s ease-in-out infinite;}
+@keyframes vsPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
+/* Scene 3 - binary */
+.mt{display:flex;flex-direction:column;align-items:center;}
+.mtn{font-family:'JetBrains Mono',monospace;font-size:.56rem;font-weight:700;padding:7px 12px;text-align:center;min-width:80px;letter-spacing:1px;}
+.mtr{background:linear-gradient(135deg,var(--v),var(--v2));color:#fff;}
+.mtl{background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.4);color:var(--gold);}
+.mtrr{background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.4);color:var(--v3);}
+.mtline{width:1px;height:16px;background:rgba(168,85,247,.3);}
+.mtrow{display:flex;gap:18px;position:relative;}
+.mtrow::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:80px;height:1px;background:rgba(168,85,247,.3);}
+.mtcol{display:flex;flex-direction:column;align-items:center;}
+.inc-badge{background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.3);padding:6px 14px;font-family:'JetBrains Mono',monospace;font-size:.62rem;font-weight:700;color:#10B981;text-align:center;margin-top:10px;animation:ibPulse 1.2s ease-in-out infinite;}
+@keyframes ibPulse{0%,100%{box-shadow:0 0 0 rgba(16,185,129,0)}50%{box-shadow:0 0 16px rgba(16,185,129,.4)}}
+/* Scene 4 - wallet */
+.wv{display:flex;flex-direction:column;align-items:center;gap:10px;}
+.wv-body{width:120px;height:80px;background:rgba(168,85,247,.08);border:2px solid rgba(168,85,247,.4);position:relative;overflow:hidden;display:flex;align-items:flex-end;}
+.wv-fill{width:100%;background:linear-gradient(to top,var(--gold),rgba(245,158,11,.3));animation:wvFill 2s ease-in-out infinite alternate;}
+@keyframes wvFill{from{height:15%}to{height:85%}}
+.wv-amt{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:.9rem;font-weight:700;color:#fff;z-index:1;text-shadow:0 0 8px var(--gold);}
+.wv-coins{display:flex;gap:5px;}
+.wc{font-family:'JetBrains Mono',monospace;font-size:.58rem;font-weight:700;padding:3px 9px;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.3);color:var(--gold);}
+.rain-wrap{position:absolute;inset:0;pointer-events:none;overflow:hidden;}
+.rcoin{position:absolute;top:-20px;animation:rainFall linear infinite;}
+@keyframes rainFall{from{transform:translateY(-10px) rotate(0);opacity:1}to{transform:translateY(450px) rotate(360deg);opacity:0}}
+/* Caption */
+.vcap{position:absolute;bottom:0;left:0;right:0;background:rgba(5,3,15,.95);backdrop-filter:blur(14px);padding:14px 24px;border-top:1px solid rgba(168,85,247,.18);z-index:10;min-height:65px;display:flex;align-items:center;}
+.vcap-t{font-size:.95rem;font-weight:500;color:#fff;line-height:1.6;text-align:center;width:100%;font-family:'DM Sans',sans-serif;}
+.vcap-t .hl{color:var(--gold);font-weight:700;}.vcap-t .hlv{color:var(--v3);font-weight:700;}
+/* Play overlay */
+.v-overlay{position:absolute;inset:0;z-index:20;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(0,0,0,.58);backdrop-filter:blur(5px);transition:opacity .45s;}
+.v-play-btn{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--v),var(--v2));border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.9rem;transition:all .3s;animation:playPulse 2s ease infinite;}
+@keyframes playPulse{0%{box-shadow:0 0 0 0 rgba(168,85,247,.5)}70%{box-shadow:0 0 0 22px rgba(168,85,247,0)}100%{box-shadow:0 0 0 0 rgba(168,85,247,0)}}
+.v-play-btn:hover{transform:scale(1.12);}
+.v-play-lbl{font-family:'Syne',sans-serif;font-size:.75rem;font-weight:700;letter-spacing:3px;color:#fff;margin-top:16px;text-transform:uppercase;}
+.v-play-dur{font-family:'JetBrains Mono',monospace;font-size:.63rem;color:var(--v3);margin-top:4px;letter-spacing:1px;}
+/* Controls */
+.vtut-ctrl{background:rgba(0,0,0,.9);border-top:1px solid rgba(168,85,247,.1);padding:13px 20px;display:flex;align-items:center;gap:13px;}
+.vctrl{background:transparent;border:none;color:#fff;font-size:.9rem;cursor:pointer;padding:4px 8px;transition:all .2s;font-family:'JetBrains Mono',monospace;flex-shrink:0;border-radius:2px;}
+.vctrl:hover{background:rgba(168,85,247,.15);color:var(--v3);}
+.vprog{flex:1;height:4px;background:rgba(255,255,255,.07);cursor:pointer;position:relative;border-radius:2px;}
+.vprog-fill{height:100%;background:linear-gradient(90deg,var(--v),var(--v2),var(--pink));border-radius:2px;width:0%;transition:width .5s linear;position:relative;}
+.vprog-fill::after{content:'';position:absolute;right:-5px;top:50%;transform:translateY(-50%);width:10px;height:10px;border-radius:50%;background:var(--v3);box-shadow:0 0 8px var(--v2);}
+.vtime{font-family:'JetBrains Mono',monospace;font-size:.63rem;color:var(--text);flex-shrink:0;letter-spacing:1px;}
+.vdots{display:flex;gap:5px;}
+.vd{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.12);cursor:pointer;transition:all .3s;}
+.vd.act{background:var(--v2);box-shadow:0 0 7px var(--v2);}
+
+/* FEATURES */
+.feat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:var(--border2);}
+.feat{background:var(--card);padding:32px 26px;text-align:center;transition:all .3s;position:relative;overflow:hidden;}
+.feat:hover{background:var(--bg3);}
+.feat::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--v2),transparent);opacity:0;transition:opacity .3s;}
+.feat:hover::after{opacity:1;}
+.feat-i{font-size:1.9rem;margin-bottom:14px;display:block;}
+.feat-t{font-family:'Syne',sans-serif;font-size:.92rem;font-weight:700;color:#fff;margin-bottom:7px;}
+.feat-d{font-size:.82rem;line-height:1.6;color:var(--text);}
+
+/* CTA */
+.cta{position:relative;z-index:1;padding:110px 5%;text-align:center;overflow:hidden;}
+.cta-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:500px;height:300px;background:radial-gradient(ellipse,rgba(124,58,237,.14),transparent 70%);pointer-events:none;}
+.cta h2{font-family:'Syne',sans-serif;font-size:clamp(1.8rem,5vw,3.8rem);font-weight:900;color:#fff;letter-spacing:-1px;margin-bottom:14px;position:relative;}
+.cta h2 em{color:transparent;background:linear-gradient(135deg,var(--v2),var(--pink),var(--gold));-webkit-background-clip:text;background-clip:text;font-style:normal;background-size:200%;animation:gradShift 3s ease infinite;}
+.cta p{font-size:1rem;color:var(--text);margin-bottom:36px;position:relative;}
+.cta-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;position:relative;}
+.btn-c1{background:linear-gradient(135deg,var(--v),var(--v2));border:none;padding:17px 42px;font-family:'Syne',sans-serif;font-size:.8rem;font-weight:700;letter-spacing:2px;color:#fff;cursor:pointer;transition:all .3s;}
+.btn-c1:hover{box-shadow:0 18px 50px rgba(124,58,237,.5);transform:translateY(-3px);}
+.btn-c2{background:linear-gradient(135deg,var(--gold),var(--gold2));border:none;padding:17px 42px;font-family:'Syne',sans-serif;font-size:.8rem;font-weight:700;letter-spacing:2px;color:#000;cursor:pointer;transition:all .3s;}
+.btn-c2:hover{box-shadow:0 18px 50px rgba(245,158,11,.4);transform:translateY(-3px);}
+
+/* FOOTER */
+footer{position:relative;z-index:1;background:var(--bg2);border-top:1px solid var(--border2);padding:56px 5% 26px;}
+.foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:44px;margin-bottom:44px;}
+.foot-logo{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:900;letter-spacing:4px;color:#fff;margin-bottom:14px;}
+.foot-logo em{color:transparent;background:linear-gradient(135deg,var(--v2),var(--pink));-webkit-background-clip:text;background-clip:text;font-style:normal;}
+.foot-p{font-size:.86rem;line-height:1.8;color:var(--text);max-width:250px;}
+.foot-col h6{font-family:'JetBrains Mono',monospace;font-size:.62rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--v3);margin-bottom:18px;}
+.foot-col ul{list-style:none;}
+.foot-col ul li{margin-bottom:11px;font-size:.86rem;color:var(--text);cursor:pointer;transition:color .2s;}
+.foot-col ul li:hover{color:#fff;}
+.foot-bot{border-top:1px solid var(--border2);padding-top:22px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+.foot-bot p{font-size:.74rem;color:rgba(156,163,175,.3);}
+.fcoins{display:flex;gap:8px;}
+.fc{font-family:'JetBrains Mono',monospace;font-size:.62rem;font-weight:700;padding:4px 11px;background:var(--bg3);border:1px solid var(--border2);color:var(--text);}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .nav-links{display:none;}
+  .stats-grid{grid-template-columns:repeat(2,1fr);}
+  .pkg-grid{grid-template-columns:1fr;}
+  .bin-wrap{grid-template-columns:1fr;}
+  .pay-grid{grid-template-columns:1fr;}
+  .how-grid,.feat-grid{grid-template-columns:1fr 1fr;}
+  .foot-grid{grid-template-columns:1fr 1fr;}
+  .wd-top{grid-template-columns:1fr;}
+  .wd-bot{grid-template-columns:1fr;}
+  .wd-sec+.wd-sec{border-left:none;border-top:1px solid var(--border2);}
+  .br::before{width:90px;}
+  .how-step+.how-step::before{display:none;}
+}
+</style>
+</head>
+<body>
+
+<!-- ════════════ INTRO SPLASH ════════════ -->
+<div id="intro">
+  <div class="i-bg"></div>
+  <div class="i-hex"></div>
+  <div class="i-orb io1"></div>
+  <div class="i-orb io2"></div>
+  <div class="i-orb io3"></div>
+  <div class="i-ring ir1"></div>
+  <div class="i-ring ir2"></div>
+  <div class="i-ring ir3"></div>
+  <div class="i-scan"></div>
+  <div class="i-parts" id="iParts"></div>
+  <div class="i-corner ctl"><svg viewBox="0 0 50 50" fill="none"><path d="M5 45L5 5L45 5" stroke="#7B2FFF" stroke-width="2" stroke-linecap="round"/><circle cx="5" cy="5" r="3" fill="#00E5FF"/></svg></div>
+  <div class="i-corner ctr"><svg viewBox="0 0 50 50" fill="none"><path d="M5 45L5 5L45 5" stroke="#7B2FFF" stroke-width="2" stroke-linecap="round"/><circle cx="5" cy="5" r="3" fill="#00E5FF"/></svg></div>
+  <div class="i-corner cbl"><svg viewBox="0 0 50 50" fill="none"><path d="M5 45L5 5L45 5" stroke="#7B2FFF" stroke-width="2" stroke-linecap="round"/><circle cx="5" cy="5" r="3" fill="#FF2D78"/></svg></div>
+  <div class="i-corner cbr"><svg viewBox="0 0 50 50" fill="none"><path d="M5 45L5 5L45 5" stroke="#7B2FFF" stroke-width="2" stroke-linecap="round"/><circle cx="5" cy="5" r="3" fill="#FF2D78"/></svg></div>
+  <div class="i-data id-l">NVX·001·SYSTEM·ACTIVE·v2.4</div>
+  <div class="i-data id-r">NOVEXA·CORE·INITIALIZED·2025</div>
+  <div class="i-center">
+    <div class="i-diamond-wrap">
+      <div class="i-diamond"><div class="i-diamond-inner"></div></div>
+    </div>
+    <div class="i-sep"><div class="i-sep-line"></div><div class="i-sep-dot"></div><div class="i-sep-line"></div></div>
+    <div class="i-brand">NOVEXA</div>
+    <div class="i-sep"><div class="i-sep-line"></div><div class="i-sep-dot"></div><div class="i-sep-line"></div></div>
+    <div class="i-tagline">Beyond the Horizon</div>
+    <button class="i-btn" id="iBtn">ENTER PLATFORM ›</button>
+    <div class="i-countdown">Auto entering in <b id="iCnt">5</b>s</div>
+  </div>
+</div>
+
+<!-- ════════════ MAIN SITE ════════════ -->
+<div id="site">
+
+<!-- NAV -->
+<nav>
+  <div class="logo"><em>NOV</em>EXA<span class="logo-dot"></span></div>
+  <ul class="nav-links">
+    <li><a href="#packages">Packages</a></li>
+    <li><a href="#income">Income</a></li>
+    <li><a href="#binary">Binary</a></li>
+    <li><a href="#tutorial" class="gold">▶ Tutorial</a></li>
+    <li><a href="#withdrawal">Withdrawal</a></li>
+    <li><a href="#how">How It Works</a></li>
+  </ul>
+  <button class="nav-cta" onclick="alert('Join NOVEXA — coming soon!')">JOIN NOW</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div style="position:relative;z-index:2;">
+    <div class="hero-badge"><span class="badge-dot"></span>Multi-Coin Crypto Earning Platform</div>
+    <h1 class="hero-title">
+      The Future of<br>
+      <span class="grad">NOVEXA</span>
+    </h1>
+    <p class="hero-sub">Daily ROI. Binary income. Instant coin credits. Earn in <strong>USDT, Solana & BNB</strong> — powered by smart contract automation.</p>
+    <div class="hero-btns">
+      <button class="btn-main" onclick="document.getElementById('packages').scrollIntoView({behavior:'smooth'})">EXPLORE PACKAGES</button>
+      <button class="btn-ghost" onclick="document.getElementById('tutorial').scrollIntoView({behavior:'smooth'})">▶ WATCH TUTORIAL</button>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker-lbl">LIVE PLAN</div>
+  <div class="ticker-track">
+    <div class="ticker-inner">
+      <div class="ti">USDT BEP20 <b>✓</b></div><div class="ti">SOLANA COIN <b>✓</b></div><div class="ti">BNB PROJECT COIN <b>✓</b></div><div class="ti">ROI <b>2X / 100 DAYS</b></div><div class="ti">REFERRAL <b>10%</b></div><div class="ti">BINARY <b>10%</b></div><div class="ti">MIN WITHDRAWAL <b>$10</b></div><div class="ti">POWER LEG <b>CARRY FORWARD</b></div><div class="ti">SERVICE CHARGE <b>10%</b></div>
+      <div class="ti">USDT BEP20 <b>✓</b></div><div class="ti">SOLANA COIN <b>✓</b></div><div class="ti">BNB PROJECT COIN <b>✓</b></div><div class="ti">ROI <b>2X / 100 DAYS</b></div><div class="ti">REFERRAL <b>10%</b></div><div class="ti">BINARY <b>10%</b></div><div class="ti">MIN WITHDRAWAL <b>$10</b></div><div class="ti">POWER LEG <b>CARRY FORWARD</b></div><div class="ti">SERVICE CHARGE <b>10%</b></div>
+    </div>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stats-grid">
+    <div class="stat"><span class="stat-n gold" data-c="100" data-s=" Days">0</span><span class="stat-l">ROI Duration</span></div>
+    <div class="stat"><span class="stat-n violet" data-c="2" data-s="X Returns">0</span><span class="stat-l">Total Profit</span></div>
+    <div class="stat"><span class="stat-n pink" data-c="10" data-p="$">0</span><span class="stat-l">Min Withdrawal</span></div>
+    <div class="stat"><span class="stat-n white" data-c="3" data-s=" Coins">0</span><span class="stat-l">Payout Tokens</span></div>
+  </div>
+</div>
+
+<!-- PACKAGES -->
+<section class="sec" id="packages">
+  <div class="tc">
+    <div class="eyebrow">Investment Packages</div>
+    <h2 class="sec-title">Choose Your <em>Entry Plan</em></h2>
+    <p class="sec-sub">Both packages include instant coin credit, automated income and multi-token payouts. No waiting. No delays.</p>
+  </div>
+  <div class="pkg-grid">
+    <div class="pkg">
+      <div class="pkg-chip chip-s">STARTER</div>
+      <div class="pkg-price"><sup>$</sup>50</div>
+      <div class="pkg-name">Starter Package</div>
+      <ul class="pkg-list">
+        <li><span class="ic">🟡</span><span><strong>$25 Solana Meme Coin</strong> — Live trading coin, instant wallet credit</span></li>
+        <li><span class="ic">🔵</span><span><strong>$25 BNB Project Coin</strong> — Upcoming coin, instant wallet credit</span></li>
+        <li><span class="ic">✦</span><span>100% Referral Income Model</span></li>
+        <li><span class="ic">✦</span><span>Refer 5 members → earn <strong>$250</strong> over 100 days</span></li>
+        <li><span class="ic">✦</span><span>Every new referral after 5 = extra 100% ROI benefit</span></li>
+        <li><span class="ic">✦</span><span>Zero waiting — coins credited on signup</span></li>
+      </ul>
+      <div class="pkg-tag">⚡ Payout: 50% Solana Coin + 50% BNB Project Coin</div>
+      <button class="btn-p btn-ps" onclick="alert('Join NOVEXA — coming soon!')">START WITH $50</button>
+    </div>
+    <div class="pkg hot">
+      <div class="pkg-chip chip-u">★ UPGRADE</div>
+      <div class="pkg-price"><sup>$</sup>100</div>
+      <div class="pkg-name">Upgrade Package</div>
+      <ul class="pkg-list">
+        <li><span class="ic">💎</span><span><strong>2X ROI in 100 Days</strong> — $200 total, daily credit to wallet</span></li>
+        <li><span class="ic">💎</span><span><strong>10% Direct Referral</strong> — Instant credit on every referral</span></li>
+        <li><span class="ic">💎</span><span><strong>10% Binary Income</strong> — Matching on weaker leg daily</span></li>
+        <li><span class="ic">✦</span><span>Power leg carry forward — volume never resets</span></li>
+        <li><span class="ic">✦</span><span>Daily binary income cap: <strong>$100/day</strong></span></li>
+        <li><span class="ic">✦</span><span>Full smart contract automation</span></li>
+      </ul>
+      <div class="pkg-tag">⚡ Payout: 80% USDT (BEP20) + 20% Solana Live Coin</div>
+      <button class="btn-p btn-pu" onclick="alert('Join NOVEXA — coming soon!')">UPGRADE TO $100 →</button>
+    </div>
+  </div>
+</section>
+
+<!-- INCOME -->
+<section class="sec alt" id="income">
+  <div class="tc">
+    <div class="eyebrow">Earning System</div>
+    <h2 class="sec-title">4 Streams of <em>Income</em></h2>
+    <p class="sec-sub">Every earning layer is automated. ROI flows daily. Referral and binary income credit instantly. Set it and earn.</p>
+  </div>
+  <div class="inc-grid">
+    <div class="inc"><div class="inc-n">2X</div><div class="inc-t">ROI Income</div><div class="inc-d">Double your $100 in 100 days. ROI calculated and distributed to your wallet automatically every 24 hours.</div><div class="tags"><span class="tag tg">Daily Credit</span><span class="tag tv">100 Days</span><span class="tag tp">Automated</span></div></div>
+    <div class="inc"><div class="inc-n">10%</div><div class="inc-t">Referral Income</div><div class="inc-d">Earn 10% instant bonus for every $100 Upgrade referral. For $50 package: 5 referrals = $250 income over 100 days.</div><div class="tags"><span class="tag tg">Instant Credit</span><span class="tag tv">Unlimited</span></div></div>
+    <div class="inc"><div class="inc-n">10%</div><div class="inc-t">Binary Income</div><div class="inc-d">Build left & right legs. Earn 10% daily on your weaker leg's volume. Power leg carries forward — volume never resets.</div><div class="tags"><span class="tag tg">Power Leg</span><span class="tag tv">Carry Fwd</span><span class="tag tp">$100/day</span></div></div>
+    <div class="inc"><div class="inc-n">∞</div><div class="inc-t">Market Upside</div><div class="inc-d">Solana meme coin and BNB project coin trade on open markets — unlimited value appreciation beyond base earnings.</div><div class="tags"><span class="tag tg">Solana</span><span class="tag tv">BNB Chain</span></div></div>
+  </div>
+</section>
+
+<!-- BINARY -->
+<section class="sec" id="binary">
+  <div class="bin-wrap">
+    <div class="bin-tree">
+      <div class="bn bn-root">YOU — ROOT NODE</div>
+      <div class="bl"></div>
+      <div class="br">
+        <div class="bc"><div class="bl"></div><div class="bn bn-l">LEFT LEG</div><div class="blbl ll">POWER LEG</div></div>
+        <div class="bc"><div class="bl"></div><div class="bn bn-r">RIGHT LEG</div><div class="blbl rl">WEAK LEG</div></div>
+      </div>
+      <div style="margin-top:20px;display:flex;gap:30px;">
+        <div class="bc" style="gap:0;"><div class="bl" style="height:16px;"></div><div class="bn" style="background:var(--bg3);border:1px solid var(--border2);color:var(--text);font-size:.58rem;min-width:90px;padding:8px 12px;">↙ Left Team</div></div>
+        <div class="bc" style="gap:0;"><div class="bl" style="height:16px;"></div><div class="bn" style="background:var(--bg3);border:1px solid var(--border2);color:var(--text);font-size:.58rem;min-width:90px;padding:8px 12px;">↘ Right Team</div></div>
+      </div>
+      <div class="bin-badge">⚡ 10% DAILY MATCH ON WEAKER LEG</div>
+    </div>
+    <div class="bin-info">
+      <div class="eyebrow">Binary System</div>
+      <h3>The <em>Power Leg</em> Advantage</h3>
+      <ul class="bin-rules">
+        <li class="bin-rule"><span class="rn">01</span><span class="rt">Place <strong>1 direct sponsor on Left</strong> and <strong>1 on Right</strong> to activate binary income.</span></li>
+        <li class="bin-rule"><span class="rn">02</span><span class="rt"><strong>10% daily</strong> matching on weaker leg's total business volume.</span></li>
+        <li class="bin-rule"><span class="rn">03</span><span class="rt">Power leg <strong>carries forward</strong> — volume is never reset or lost.</span></li>
+        <li class="bin-rule"><span class="rn">04</span><span class="rt">Daily binary income capped at <strong>$100/day</strong> per package amount.</span></li>
+        <li class="bin-rule"><span class="rn">05</span><span class="rt">Paid as <strong>80% USDT BEP20</strong> + <strong>20% Solana live coin</strong>.</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- PAYOUT -->
+<section class="sec alt">
+  <div class="tc">
+    <div class="eyebrow">Payout Structure</div>
+    <h2 class="sec-title">Multi-Coin <span class="ge">Payout</span></h2>
+    <p class="sec-sub">Earnings split across stablecoins and growth tokens — stability meets upside potential.</p>
+  </div>
+  <div class="pay-grid">
+    <div class="pay-box">
+      <h4>$100 UPGRADE — ROI + REFERRAL + BINARY</h4>
+      <div class="bar-row"><div class="bar-lbl"><span>USDT (BEP20)</span><span style="color:var(--v3);">80%</span></div><div class="bar-track"><div class="bar-fill bv"></div></div></div>
+      <div class="bar-row"><div class="bar-lbl"><span>Solana Live Coin</span><span style="color:var(--gold);">20%</span></div><div class="bar-track"><div class="bar-fill bp"></div></div></div>
+      <div class="chips"><div class="chip-c"><div class="cdot dv"></div>USDT BEP20</div><div class="chip-c"><div class="cdot dg"></div>SOL Token</div></div>
+    </div>
+    <div class="pay-box">
+      <h4>$50 STARTER — REFERRAL ROI INCOME</h4>
+      <div class="bar-row"><div class="bar-lbl"><span>Solana Meme Coin</span><span style="color:var(--gold);">50%</span></div><div class="bar-track"><div class="bar-fill bg1"></div></div></div>
+      <div class="bar-row"><div class="bar-lbl"><span>BNB Project Coin</span><span style="color:#f0b90b;">50%</span></div><div class="bar-track"><div class="bar-fill bg2"></div></div></div>
+      <div class="chips"><div class="chip-c"><div class="cdot dg"></div>SOL Meme</div><div class="chip-c"><div class="cdot db"></div>BNB Coin</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- WITHDRAWAL -->
+<section class="sec" id="withdrawal">
+  <div class="tc">
+    <div class="eyebrow">Withdrawal</div>
+    <h2 class="sec-title">Simple <em>Withdrawal</em> Rules</h2>
+    <p class="sec-sub" style="margin-bottom:44px;">Transparent. No hidden fees. No surprises.</p>
+  </div>
+  <div class="wd-wrap">
+    <div class="wd-top">
+      <div class="wd-st"><span class="wd-n">$10</span><span class="wd-l">Min Withdrawal</span></div>
+      <div class="wd-st"><span class="wd-n">10%</span><span class="wd-l">Service Charge</span></div>
+      <div class="wd-st"><span class="wd-n">AUTO</span><span class="wd-l">Processing Mode</span></div>
+    </div>
+    <div class="wd-bot">
+      <div class="wd-sec"><div class="wd-h">Supported Tokens</div><div class="chips"><div class="chip-c"><div class="cdot dv"></div>USDT BEP20</div><div class="chip-c"><div class="cdot dg"></div>Solana</div><div class="chip-c"><div class="cdot db"></div>BNB</div></div></div>
+      <div class="wd-sec"><div class="wd-h">Dual Wallet System</div><div class="wd-t">Each user gets an <strong>Internal Dashboard Wallet</strong> for balance tracking and an <strong>External Withdrawal Wallet</strong> for receiving crypto to your personal address.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- VIDEO TUTORIAL -->
+<section class="sec alt" id="tutorial">
+  <div class="tc">
+    <div class="eyebrow">Watch & Learn</div>
+    <h2 class="sec-title">60-Second <em>Tutorial</em></h2>
+    <p class="sec-sub">See how NOVEXA works — step-by-step animated guide with female voice.</p>
+  </div>
+  <div class="vtut-player">
+    <div class="vtut-header">
+      <div class="vdot r"></div><div class="vdot y"></div><div class="vdot g"></div>
+      <div class="vtut-title">NOVEXA — HOW IT WORKS (1:00)</div>
+    </div>
+    <div class="vtut-screen" id="vScreen">
+      <!-- SCENE 1 -->
+      <div class="vscene act" id="vs0">
+        <div class="sc-bg sbg1"></div>
+        <div class="sc-inner">
+          <div class="sc-vis">
+            <div class="s1logo">NOVEXA</div>
+            <div class="s1tag">Next-Gen Crypto Earning</div>
+            <div class="s1coins"><span class="s1c">💎</span><span class="s1c">🪙</span><span class="s1c">💰</span></div>
+          </div>
+          <div class="char">
+            <svg viewBox="0 0 120 220" xmlns="http://www.w3.org/2000/svg">
+              <ellipse cx="60" cy="218" rx="26" ry="5" fill="rgba(0,0,0,.3)"/>
+              <rect x="47" y="172" width="11" height="42" rx="5" fill="#7C3AED"/>
+              <rect x="62" y="172" width="11" height="42" rx="5" fill="#7C3AED"/>
+              <ellipse cx="52" cy="213" rx="11" ry="5" fill="#EC4899"/>
+              <ellipse cx="68" cy="213" rx="11" ry="5" fill="#EC4899"/>
+              <path d="M28 118 Q24 162 28 188 L92 188 Q96 162 92 118 Z" fill="#A855F7"/>
+              <rect x="28" y="142" width="64" height="7" rx="3" fill="#7C3AED"/>
+              <rect x="54" y="102" width="12" height="18" rx="6" fill="#FBBF24"/>
+              <circle cx="60" cy="80" r="30" fill="#FBBF24"/>
+              <ellipse cx="60" cy="56" rx="32" ry="18" fill="#1a0a2e"/>
+              <ellipse cx="33" cy="80" rx="9" ry="23" fill="#1a0a2e"/>
+              <ellipse cx="87" cy="80" rx="9" ry="23" fill="#1a0a2e"/>
+              <circle cx="30" cy="82" r="6" fill="#F0A020"/><circle cx="90" cy="82" r="6" fill="#F0A020"/>
+              <circle cx="30" cy="91" r="3" fill="#EC4899"/><circle cx="90" cy="91" r="3" fill="#EC4899"/>
+              <ellipse cx="50" cy="77" rx="5" ry="6" fill="#1a0a2e"/><ellipse cx="70" cy="77" rx="5" ry="6" fill="#1a0a2e"/>
+              <circle cx="52" cy="74" r="2" fill="white"/><circle cx="72" cy="74" r="2" fill="white"/>
+              <path d="M44 68 Q50 64 56 68" stroke="#1a0a2e" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <path d="M64 68 Q70 64 76 68" stroke="#1a0a2e" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <ellipse cx="42" cy="85" rx="6" ry="4" fill="rgba(236,72,153,.3)"/>
+              <ellipse cx="78" cy="85" rx="6" ry="4" fill="rgba(236,72,153,.3)"/>
+              <path d="M52 92 Q60 100 68 92" stroke="#1a0a2e" stroke-width="2.5" fill="rgba(236,72,153,.5)" stroke-linecap="round"/>
+              <line x1="32" y1="127" x2="5" y2="90" stroke="#FBBF24" stroke-width="9" stroke-linecap="round"><animateTransform attributeName="transform" type="rotate" from="-10 32 127" to="20 32 127" dur=".5s" repeatCount="indefinite" additive="sum"/></line>
+              <circle cx="5" cy="90" r="6" fill="#F0A020"/>
+              <line x1="88" y1="127" x2="115" y2="108" stroke="#FBBF24" stroke-width="9" stroke-linecap="round"/>
+              <circle cx="115" cy="108" r="6" fill="#F0A020"/>
+            </svg>
+          </div>
+        </div>
+        <div class="vcap"><div class="vcap-t">Hi there! Welcome to <span class="hl">NOVEXA</span> — the next-generation crypto earning platform! I'm here to show you how it works! 🚀</div></div>
+      </div>
+      <!-- SCENE 2 -->
+      <div class="vscene" id="vs1">
+        <div class="sc-bg sbg2"></div>
+        <div class="sc-inner">
+          <div class="sc-vis">
+            <div class="mini-cards">
+              <div class="mc"><div class="mc-name">Starter</div><div class="mc-price"><sup>$</sup>50</div><div class="mc-tag">Solana + BNB</div><div class="mc-tag" style="color:var(--v3);font-size:.58rem;margin-top:3px;">Instant ⚡</div></div>
+              <div class="cvs">VS</div>
+              <div class="mc gc"><div class="mc-name" style="color:var(--gold);">Upgrade</div><div class="mc-price"><sup>$</sup>100</div><div class="mc-tag">2X in 100 Days</div><div class="mc-badge">★ POPULAR</div></div>
+            </div>
+          </div>
+          <div class="char">
+            <svg viewBox="0 0 120 220" xmlns="http://www.w3.org/2000/svg">
+              <ellipse cx="60" cy="218" rx="26" ry="5" fill="rgba(0,0,0,.3)"/>
+              <rect x="47" y="172" width="11" height="42" rx="5" fill="#7C3AED"/><rect x="62" y="172" width="11" height="42" rx="5" fill="#7C3AED"/>
+              <ellipse cx="52" cy="213" rx="11" ry="5" fill="#EC4899"/><ellipse cx="68" cy="213" rx="11" ry="5" fill="#EC4899"/>
+              <path d="M28 118 Q24 162 28 188 L92 188 Q96 162 92 118 Z" fill="#A855F7"/>
+              <rect x="28" y="142" width="64" height="7" rx="3" fill="#7C3AED"/>
+              <rect x="54" y="102" width="12" height="18" rx="6" fill="#FBBF24"/>
+              <circle cx="60" cy="80" r="30" fill="#FBBF24"/>
+              <ellipse cx="60" cy="56" rx="32" ry="18" fill="#1a0a2e"/><ellipse cx="33" cy="80" rx="9" ry="23" fill="#1a0a2e"/><ellipse cx="87" cy="80" rx="9" ry="23" fill="#1a0a2e"/>
+              <circle cx="30" cy="82" r="6" fill="#F0A020"/><circle cx="90" cy="82" r="6" fill="#F0A020"/>
+              <circle cx="30" cy="91" r="3" fill="#EC4899"/><circle cx="90" cy="91" r="3" fill="#EC4899"/>
+              <ellipse cx="50" cy="77" rx="5" ry="6" fill="#1a0a2e"/><ellipse cx="70" cy="77" rx="5" ry="6" fill="#1a0a2e"/>
+              <circle cx="52" cy="74" r="2" fill="white"/><circle cx="72" cy="74" r="2" fill="white"/>
+              <path d="M44 68 Q50 64 56 68" stroke="#1a0a2e" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <path d="M64 68 Q70 64 76 68" stroke="#1a0a2e" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <ellipse cx="42" cy="85" rx="6" ry="4" fill="rgba(236,72,153,.3)"/><ellipse cx="78" cy="85" rx="6" ry="4" fill="rgba(236,72,153,.3)"/>
+              <path d="M52 92 Q60 100 68 92" stroke="#1a0a2e" stroke-width="2.5" fill="rgba(236,72,153,.5)" stroke-linecap="round"/>
+              <line x1="32" y1="127" x2="0" y2="108" stroke="#FBBF24" stroke-width="9" stroke-linecap="round"/>
+              <circle cx="0" cy="108" r="6" fill="#F0A020"/>
+              <line x1="88" y1="127" x2="112" y2="148" stroke="#FBBF24" stroke-width="9" stroke-linecap="round"/>
+              <circle cx="112" cy="148" r="6" fill="#F0A020"/>
+            </svg>
+          </div>
+        </div>
+        <div class="vcap"><div class="vcap-t">Choose your package! <span class="hl">$50 Starter</span> gets Solana and BNB coins <span class="hlv">instantly</span>! Or <span class="hl">$100 Upgrade</span> — earn 2X your money in just 100 days! 💰</div></div>
+      </div>
+      <!-- SCENE 3 -->
+      <div class="vscene" id="vs2">
+        <div class="sc-bg sbg3"></div>
+        <div class="sc-inner">
+          <div class="sc-vis">
+            <div class="mt">
+              <div class="mtn mtr">YOU</div><div class="mtline"></div>
+              <div class="mtrow">
+                <div class="mtcol"><div class="mtline"></div><div class="mtn mtl">LEFT LEG</div></div>
+                <div class="mtcol"><div class="mtline"></div><div class="mtn mtrr">RIGHT LEG</div></div>
+              </div>
+              <div class="inc-badge">⚡ 10% DAILY BINARY INCOME</div>
+            </div>
+          </div>
+          <div class="char">
+            <svg viewBox="0 0 120 220" xmlns="http://www.w3.org/2000/svg">
+              <ellipse cx="60" cy="218" rx="26" ry="5" fill="rgba(0,0,0,.3)"/>
+              <rect x="47" y="172" width="11" height="42" rx="5" fill="#7C3AED"/><rect x="62" y="172" width="11" height="42" rx="5" fill="#7C3AED"/>
+              <ellipse cx="52" cy="213" rx="11" ry="5" fill="#EC4899"/><ellipse cx="68" cy="213" rx="11" ry="5" fill="#EC4899"/>
+              <path d="M28 118 Q24 162 28 188 L92 188 Q96 162 92 118 Z" fill="#A855F7"/>
+              <rect x="28" y="142" width="64" height="7" rx="3" fill="#7C3AED"/>
+              <rect x="54" y="102" width="12" height="18" rx="6" fill="#FBBF24"/>
+              <circle cx="60" cy="80" r="30" fill="#FBBF24"/>
+              <ellipse cx="60" cy="56" rx="32" ry="18" fill="#1a0a2e"/><ellipse cx="33" cy="80" rx="9" ry="23" fill="#1a0a2e"/><ellipse cx="87" cy="80" rx="9" ry="23" fill="#1a0a2e"/>
+              <circle cx="30" cy="82" r="6" fill="#F0A020"/><circle cx="90" cy="82" r="6" fill="#F0A020"/>
+              <circle cx="30" cy="91" r="3" fill="#EC4899"/><circle cx="90" cy="91" r="3" fill="#EC4899"/>
+              <ellipse cx="50" cy="77" rx="5" ry="6" fill="#1a0a2e"/><ellipse cx="70" cy="77" rx="5" ry="6" fill="#1a0a2e"/>
+              <circle cx="52" cy="74" r="2" fill="white"/><circle cx="72" cy="74" r="2" fill="white"/>
+              <path d="M44 68 Q50 64 56 68" stroke="#1a0a2e" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <path d="M64 68 Q70 64 76 68" stroke="#1a0a2e" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <ellipse cx="42" cy="85" rx="6" ry="4" fill="rgba(236,72,153,.3)"/><ellipse cx="78" cy="85" rx="6" ry="4" fill="rgba(236,72,153,.3)"/>
+              <path d="M52 92 Q60 100 68 92" stroke="#1a0a2e" stroke-width="2.5" fill="rgba(236,72,153,.5)" stroke-linecap="round"/>
+              <line x1="32" y1="127" x2="4" y2="94" stroke="#FBBF24" stroke-width="9" stroke-linecap="round"/>
+              <circle cx="4" cy="94" r="6" fill="#F0A020"/>
+              <line x1="88" y1="127" x2="116" y2="94" stroke="#FBBF24" stroke-width="9" stroke-linecap="round"/>
+              <circle cx="116" cy="94" r="6" fill="#F0A020"/>
+            </svg>
+          </div>
+        </div>
+        <div class="vcap"><div class="vcap-t">Build your team! Place one member on <span class="hl">Left leg</span> and one on <span class="hl">Right leg</span>. Earn <span class="hlv">10% binary income every day</span>! Power leg carries forward forever! ⚖️</div></div>
+      </div>
+      <!-- SCENE 4 -->
+      <div class="vscene" id="vs3">
+        <div class="sc-bg sbg4"></div>
+        <div class="rain-wrap" id="rainWrap"></div>
+        <div class="sc-inner">
+          <div class="sc-vis">
+            <div class="wv">
+              <div style="font-size:1.1rem;font-family:'Syne',sans-serif;font-weight:700;color:#fff;margin-bottom:8px;">Your Wallet 💼</div>
+              <div class="wv-body"><div class="wv-fill"></div><div class="wv-amt">+$$$</div></div>
+              <div class="wv-coins"><div class="wc">USDT</div><div class="wc">SOL</div><div class="wc">BNB</div></div>
+            </div>
+          </div>
+          <div class="char">
+            <svg viewBox="0 0 120 220" xmlns="http://www.w3.org/2000/svg">
+              <ellipse cx="60" cy="218" rx="26" ry="5" fill="rgba(0,0,0,.3)"/>
+              <rect x="47" y="172" width="11" height="42" rx="5" fill="#7C3AED"/><rect x="62" y="172" width="11" height="42" rx="5" fill="#7C3AED"/>
+              <ellipse cx="52" cy="213" rx="11" ry="5" fill="#EC4899"/><ellipse cx="68" cy="213" rx="11" ry="5" fill="#EC4899"/>
+              <path d="M28 118 Q24 162 28 188 L92 188 Q96 162 92 118 Z" fill="#A855F7"/>
+              <rect x="28" y="142" width="64" height="7" rx="3" fill="#7C3AED"/>
+              <rect x="54" y="102" width="12" height="18" rx="6" fill="#FBBF24"/>
+              <circle cx="60" cy="80" r="30" fill="#FBBF24"/>
+              <ellipse cx="60" cy="56" rx="32" ry="18" fill="#1a0a2e"/><ellipse cx="33" cy="80" rx="9" ry="23" fill="#1a0a2e"/><ellipse cx="87" cy="80" rx="9" ry="23" fill="#1a0a2e"/>
+              <circle cx="30" cy="82" r="6" fill="#F0A020"/><circle cx="90" cy="82" r="6" fill="#F0A020"/>
+              <circle cx="30" cy="91" r="3" fill="#EC4899"/><circle cx="90" cy="91" r="3" fill="#EC4899"/>
+              <ellipse cx="50" cy="77" rx="5" ry="6" fill="#1a0a2e"/><ellipse cx="70" cy="77" rx="5" ry="6" fill="#1a0a2e"/>
+              <circle cx="52" cy="74" r="2" fill="white"/><circle cx="72" cy="74" r="2" fill="white"/>
+              <path d="M44 68 Q50 64 56 68" stroke="#1a0a2e" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <path d="M64 68 Q70 64 76 68" stroke="#1a0a2e" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <ellipse cx="42" cy="85" rx="6" ry="4" fill="rgba(236,72,153,.3)"/><ellipse cx="78" cy="85" rx="6" ry="4" fill="rgba(236,72,153,.3)"/>
+              <path d="M44 92 Q60 106 76 92" stroke="#1a0a2e" stroke-width="2.5" fill="rgba(236,72,153,.5)" stroke-linecap="round"/>
+              <text x="18" y="42" font-size="11" fill="#F59E0B" opacity=".8">⭐</text>
+              <text x="92" y="38" font-size="11" fill="#EC4899" opacity=".8">✨</text>
+              <text x="58" y="24" font-size="10" fill="#A855F7" opacity=".8">🎉</text>
+              <line x1="32" y1="127" x2="5" y2="80" stroke="#FBBF24" stroke-width="9" stroke-linecap="round"><animateTransform attributeName="transform" type="rotate" from="-15 32 127" to="10 32 127" dur=".4s" repeatCount="indefinite" additive="sum"/></line>
+              <circle cx="5" cy="80" r="6" fill="#F0A020"/>
+              <line x1="88" y1="127" x2="115" y2="80" stroke="#FBBF24" stroke-width="9" stroke-linecap="round"><animateTransform attributeName="transform" type="rotate" from="15 88 127" to="-10 88 127" dur=".4s" repeatCount="indefinite" additive="sum"/></line>
+              <circle cx="115" cy="80" r="6" fill="#F0A020"/>
+            </svg>
+          </div>
+        </div>
+        <div class="vcap"><div class="vcap-t">Wallet grows <span class="hl">every single day</span>! ROI, referral and binary — all <span class="hlv">auto-credited</span>. Withdraw above just <span class="hl">$10</span>. Join <span class="hl">NOVEXA</span> today! 🎉</div></div>
+      </div>
+      <!-- OVERLAY -->
+      <div class="v-overlay" id="vOv">
+        <button class="v-play-btn" id="vPlayBig">▶</button>
+        <div class="v-play-lbl">Play Tutorial</div>
+        <div class="v-play-dur">🎙 Female Voice · 4 Scenes · 1 Min</div>
+      </div>
+    </div>
+    <div class="vtut-ctrl">
+      <button class="vctrl" id="vPP">▶</button>
+      <button class="vctrl" id="vRst">↺</button>
+      <div class="vprog" id="vProg"><div class="vprog-fill" id="vFill"></div></div>
+      <div class="vtime" id="vTime">0:00 / 1:00</div>
+      <div class="vdots">
+        <div class="vd act" data-i="0"></div>
+        <div class="vd" data-i="1"></div>
+        <div class="vd" data-i="2"></div>
+        <div class="vd" data-i="3"></div>
+      </div>
+    </div>
+  </div>
+  <p style="text-align:center;margin-top:14px;font-size:.76rem;color:var(--text);">🎬 <span style="color:var(--v3);font-weight:600;">Animated captions</span> with typing effect — works on all browsers!</p>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="sec" id="how">
+  <div class="tc">
+    <div class="eyebrow">Getting Started</div>
+    <h2 class="sec-title">4 Steps to <em>Start Earning</em></h2>
+    <p class="sec-sub">Fully automated from day one. Just register, deposit, and let NOVEXA do the rest.</p>
+  </div>
+  <div class="how-grid">
+    <div class="how-step"><div class="how-n">STEP <span>01</span></div><span class="how-icon">🔐</span><div class="how-t">Register Account</div><div class="how-d">Sign up using a referral link. Configure your internal wallet and external crypto address.</div></div>
+    <div class="how-step"><div class="how-n">STEP <span>02</span></div><span class="how-icon">💰</span><div class="how-t">Choose Package</div><div class="how-d">Select $50 or $100 package. Deposit USDT BEP20 — coins credited to your wallet instantly.</div></div>
+    <div class="how-step"><div class="how-n">STEP <span>03</span></div><span class="how-icon">🌐</span><div class="how-t">Build Your Network</div><div class="how-d">Place members on left and right legs. Build binary tree and activate all 3 income streams.</div></div>
+    <div class="how-step"><div class="how-n">STEP <span>04</span></div><span class="how-icon">⚡</span><div class="how-t">Earn Every Day</div><div class="how-d">ROI, referral and binary income auto-credited. Withdraw anytime above $10 minimum.</div></div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="sec alt">
+  <div class="tc">
+    <div class="eyebrow">Platform</div>
+    <h2 class="sec-title">Fully <span class="ge">Automated</span> System</h2>
+    <p class="sec-sub">Smart contract logic — trustless, transparent, and unstoppable.</p>
+  </div>
+  <div class="feat-grid">
+    <div class="feat"><span class="feat-i">⚡</span><div class="feat-t">Instant Coin Credit</div><div class="feat-d">Solana & BNB coins credited the moment you join — zero delay.</div></div>
+    <div class="feat"><span class="feat-i">🔁</span><div class="feat-t">Daily ROI Engine</div><div class="feat-d">Automated daily ROI distribution across all active wallets every 24 hours.</div></div>
+    <div class="feat"><span class="feat-i">🛡️</span><div class="feat-t">Smart Contract</div><div class="feat-d">Blockchain transparency and tamper-proof record-keeping for all transactions.</div></div>
+    <div class="feat"><span class="feat-i">📊</span><div class="feat-t">Admin Dashboard</div><div class="feat-d">Full user management, income tracking, withdrawal approvals and live reports.</div></div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta">
+  <div class="cta-glow"></div>
+  <h2>Join <em>NOVEXA</em> Today</h2>
+  <p>Start earning daily ROI, referral bonuses, and binary income — fully automated.</p>
+  <div class="cta-btns">
+    <button class="btn-c1" onclick="alert('Join NOVEXA — coming soon!')">START WITH $50 →</button>
+    <button class="btn-c2" onclick="alert('Join NOVEXA — coming soon!')">UPGRADE TO $100 →</button>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-grid">
+    <div>
+      <div class="foot-logo"><em>NOV</em>EXA</div>
+      <p class="foot-p">Next-level crypto earning platform with multi-coin payouts, binary income, and automated daily ROI on blockchain.</p>
+    </div>
+    <div class="foot-col"><h6>Platform</h6><ul><li>Packages</li><li>Binary System</li><li>ROI Engine</li><li>Withdrawal</li></ul></div>
+    <div class="foot-col"><h6>Support</h6><ul><li>How It Works</li><li>FAQ</li><li>Telegram</li><li>Contact</li></ul></div>
+    <div class="foot-col"><h6>Legal</h6><ul><li>Terms of Service</li><li>Privacy Policy</li><li>Risk Disclaimer</li><li>Smart Contract</li></ul></div>
+  </div>
+  <div class="foot-bot">
+    <p>© 2025 NOVEXA. All rights reserved. Crypto investments carry risk. Invest responsibly.</p>
+    <div class="fcoins"><div class="fc">USDT</div><div class="fc">SOL</div><div class="fc">BNB</div></div>
+  </div>
+</footer>
+
+</div><!-- /site -->
+
+<script>
+// ─── INTRO ───
+(function(){
+  var p=document.getElementById('iParts');
+  var cols=['#7B2FFF','#00E5FF','#FF2D78'];
+  for(var i=0;i<50;i++){
+    var el=document.createElement('div');
+    el.className='i-part';
+    var c=cols[i%3],sz=(Math.random()*3+1)+'px';
+    el.style.cssText='left:'+Math.random()*100+'%;top:'+(50+Math.random()*50)+'%;width:'+sz+';height:'+sz+';background:'+c+';box-shadow:0 0 6px '+c+';animation-duration:'+(Math.random()*10+7)+'s;animation-delay:'+(Math.random()*10)+'s;';
+    p.appendChild(el);
+  }
+  var cnt=5,ce=document.getElementById('iCnt');
+  var t=setInterval(function(){ cnt--; if(ce) ce.textContent=cnt; if(cnt<=0){clearInterval(t);enter();} },1000);
+  document.getElementById('iBtn').onclick=function(){clearInterval(t);enter();};
+  function enter(){
+    var intro=document.getElementById('intro');
+    intro.classList.add('exit');
+    setTimeout(function(){
+      intro.style.display='none';
+      document.getElementById('site').style.display='block';
+    },900);
+  }
+})();
+
+// ─── STATS ───
+var sEls=document.querySelectorAll('[data-c]');
+var so=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting){
+      var el=e.target,tgt=+el.dataset.c,pre=el.dataset.p||'',suf=el.dataset.s||'';
+      var cur=0,step=tgt/60;
+      var iv=setInterval(function(){cur=Math.min(cur+step,tgt);el.textContent=pre+Math.round(cur)+suf;if(cur>=tgt)clearInterval(iv);},16);
+      so.unobserve(el);
+    }
+  });
+},{threshold:.5});
+sEls.forEach(function(el){so.observe(el);});
+
+// ─── VIDEO TUTORIAL — VISUAL + TYPING CAPTIONS ───
+(function(){
+  var SCENES=[
+    {id:'vs0',dur:14,cap:'👋 Hi there! Welcome to <span class="hl">NOVEXA</span> — the next-generation crypto earning platform! Let me show you how it works! 🚀'},
+    {id:'vs1',dur:16,cap:'💰 Choose your package! <span class="hl">$50 Starter</span> = Solana + BNB coins <span class="hlv">INSTANT</span>! Or <span class="hl">$100 Upgrade</span> = earn <span class="hl">2X in 100 days</span>!'},
+    {id:'vs2',dur:16,cap:'⚖️ Build your team! Left leg + Right leg = <span class="hl">10% binary income DAILY</span>! Power leg <span class="hlv">carries forward</span> — volume never lost!'},
+    {id:'vs3',dur:14,cap:'🎉 Wallet grows <span class="hl">every day</span>! ROI + Referral + Binary — all <span class="hlv">auto-credited</span>! Withdraw above <span class="hl">$10</span> anytime. Join <span class="hl">NOVEXA</span>!'}
+  ];
+  var TOTAL=60,elapsed=0,curSc=0,playing=false,ticker=null;
+  var typTimer=null;
+
+  function showScene(i){
+    document.querySelectorAll('.vscene').forEach(function(s){s.classList.remove('act');});
+    document.querySelectorAll('.vd').forEach(function(d,j){d.classList.toggle('act',j===i);});
+    var el=document.getElementById(SCENES[i].id);
+    if(el) el.classList.add('act');
+    curSc=i;
+    // Rain on scene 4
+    var rw=document.getElementById('rainWrap');
+    if(i===3){
+      if(rw&&!rw.children.length){
+        var cc=['🪙','💰','💎','⭐','✨','🔥'];
+        for(var k=0;k<18;k++){
+          var sp=document.createElement('span');
+          sp.textContent=cc[k%cc.length];
+          sp.style.cssText='position:absolute;left:'+Math.round(Math.random()*88)+'%;top:-20px;font-size:'+(0.8+Math.random()*0.5).toFixed(1)+'rem;animation:rainFall '+(1.8+Math.random()*1.5).toFixed(1)+'s '+(Math.random()*2).toFixed(1)+'s linear infinite;';
+          rw.appendChild(sp);
+        }
+      }
+    } else { if(rw) rw.innerHTML=''; }
+    // Typing caption
+    typeCaption(SCENES[i].cap);
+  }
+
+  function typeCaption(html){
+    clearInterval(typTimer);
+    var cap=document.querySelector('#'+SCENES[curSc].id+' .vcap-t');
+    if(!cap) return;
+    // Strip HTML for typing, then reveal full HTML at end
+    var plain=html.replace(/<[^>]+>/g,'');
+    cap.textContent='';
+    var idx=0;
+    typTimer=setInterval(function(){
+      if(idx>=plain.length){ cap.innerHTML=html; clearInterval(typTimer); return; }
+      cap.textContent=plain.substring(0,idx+1)+'|';
+      idx++;
+    },28);
+  }
+
+  function tick(){
+    if(!playing) return;
+    elapsed++;
+    var pct=Math.min(elapsed/TOTAL*100,100);
+    var f=document.getElementById('vFill'); if(f) f.style.width=pct+'%';
+    var m=Math.floor(elapsed/60),s=elapsed%60;
+    var td=document.getElementById('vTime'); if(td) td.textContent=m+':'+(s<10?'0':'')+s+' / 1:00';
+    var acc=0;
+    for(var i=0;i<SCENES.length;i++){
+      if(elapsed>=acc&&elapsed<acc+SCENES[i].dur){ if(curSc!==i){ showScene(i); } break; }
+      acc+=SCENES[i].dur;
+    }
+    if(elapsed>=TOTAL) stop();
+  }
+
+  function hideOv(){var o=document.getElementById('vOv');if(o){o.style.opacity='0';o.style.pointerEvents='none';}}
+  function showOv(l){var o=document.getElementById('vOv');if(!o)return;o.style.opacity='1';o.style.pointerEvents='auto';var lb=o.querySelector('.v-play-lbl');if(lb)lb.textContent=l||'Play Tutorial';}
+  function play(){playing=true;hideOv();document.getElementById('vPP').textContent='⏸';clearInterval(ticker);ticker=setInterval(tick,1000);showScene(curSc);}
+  function pause(){playing=false;clearInterval(ticker);clearInterval(typTimer);document.getElementById('vPP').textContent='▶';}
+  function stop(){pause();showOv('↺ Replay');}
+  function reset(){stop();elapsed=0;curSc=0;showScene(0);var f=document.getElementById('vFill');if(f)f.style.width='0%';var td=document.getElementById('vTime');if(td)td.textContent='0:00 / 1:00';showOv('Play Tutorial');}
+
+  document.getElementById('vPlayBig').onclick=function(){elapsed=0;curSc=0;play();};
+  document.getElementById('vPP').onclick=function(){if(playing)pause();else{elapsed=0;curSc=0;play();}};
+  document.getElementById('vRst').onclick=reset;
+
+  document.querySelectorAll('.vd').forEach(function(d){
+    d.onclick=function(){
+      var idx=+d.dataset.i,acc=0;
+      for(var i=0;i<idx;i++) acc+=SCENES[i].dur;
+      elapsed=acc; showScene(idx);
+      var f=document.getElementById('vFill');if(f)f.style.width=(elapsed/TOTAL*100)+'%';
+    };
+  });
+
+  document.getElementById('vProg').onclick=function(e){
+    var r=this.getBoundingClientRect(),pct=Math.max(0,Math.min(1,(e.clientX-r.left)/r.width));
+    elapsed=Math.floor(pct*TOTAL);
+    var acc=0;
+    for(var i=0;i<SCENES.length;i++){if(elapsed>=acc&&elapsed<acc+SCENES[i].dur){showScene(i);break;}acc+=SCENES[i].dur;}
+    var f=document.getElementById('vFill');if(f)f.style.width=(pct*100)+'%';
+  };
+})();
+</script>
+</body>
+</html>
