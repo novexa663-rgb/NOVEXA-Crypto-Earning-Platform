@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>NOVEXA</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Syne:wght@700;800;900&family=JetBrains+Mono:wght@300;400;700&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;overflow:hidden;background:#010005;}
+body{display:flex;align-items:center;justify-content:center;cursor:none;}
+
+/* CUSTOM CURSOR */
+.cur{position:fixed;width:8px;height:8px;background:#A855F7;border-radius:50%;pointer-events:none;z-index:9999;transition:width .15s,height .15s;mix-blend-mode:screen;}
+.cur-ring{position:fixed;width:36px;height:36px;border:1px solid rgba(168,85,247,.3);border-radius:50%;pointer-events:none;z-index:9998;transition:all .1s ease;mix-blend-mode:screen;}
+
+/* CANVAS */
+canvas{position:fixed;inset:0;z-index:0;}
+
+/* NOISE */
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.03'/%3E%3C/svg%3E");pointer-events:none;z-index:2;opacity:.5;}
+
+/* VIGNETTE */
+.vignette{position:fixed;inset:0;z-index:3;pointer-events:none;background:radial-gradient(ellipse at center,transparent 50%,rgba(1,0,5,.7) 100%);}
+
+/* CENTER */
+.wrap{position:relative;z-index:10;text-align:center;padding:20px;width:100%;}
+
+/* DIAMOND LOGO */
+.diamond{width:120px;height:120px;margin:0 auto 48px;position:relative;animation:diamondIn 1.2s cubic-bezier(.16,1,.3,1) both;}
+@keyframes diamondIn{from{opacity:0;transform:scale(.5) rotate(45deg)}to{opacity:1;transform:scale(1) rotate(0)}}
+.diamond-shape{width:80px;height:80px;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(45deg);border:1px solid rgba(168,85,247,.25);background:rgba(124,58,237,.04);backdrop-filter:blur(8px);animation:diamondPulse 4s ease infinite;}
+.diamond-shape::before{content:'';position:absolute;inset:8px;border:1px solid rgba(192,132,252,.15);transform:rotate(0deg);}
+.diamond-shape::after{content:'';position:absolute;inset:16px;background:linear-gradient(135deg,rgba(124,58,237,.1),rgba(236,72,153,.08));border:1px solid rgba(236,72,153,.12);}
+@keyframes diamondPulse{0%,100%{box-shadow:0 0 0 0 rgba(168,85,247,.1)}50%{box-shadow:0 0 0 20px rgba(168,85,247,0)}}
+.diamond-text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:900;letter-spacing:3px;color:rgba(192,132,252,.9);z-index:2;}
+
+/* ORBIT RINGS */
+.orbit{position:absolute;border-radius:50%;border:1px solid transparent;}
+.orbit-1{inset:-10px;border-color:rgba(168,85,247,.08);animation:orbitSpin 20s linear infinite;}
+.orbit-2{inset:-25px;border-top-color:rgba(168,85,247,.12);animation:orbitSpin 15s linear infinite reverse;}
+.orbit-3{inset:-40px;border-bottom-color:rgba(236,72,153,.08);border-right-color:rgba(236,72,153,.05);animation:orbitSpin 12s linear infinite;}
+@keyframes orbitSpin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+
+/* ORBIT DOTS */
+.orbit-dot{position:absolute;width:4px;height:4px;border-radius:50%;background:#A855F7;}
+.orbit-dot-1{top:-2px;left:50%;animation:orbitSpin 20s linear infinite;}
+.orbit-dot-2{bottom:-2px;right:0;background:#EC4899;animation:orbitSpin 15s linear infinite reverse;}
+
+/* TITLE */
+.title{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,10vw,6rem);font-weight:300;letter-spacing:clamp(12px,4vw,28px);color:transparent;background:linear-gradient(180deg,rgba(249,250,251,.95),rgba(192,132,252,.6));-webkit-background-clip:text;background-clip:text;line-height:1;margin-bottom:6px;animation:titleIn 1.5s .3s cubic-bezier(.16,1,.3,1) both;}
+@keyframes titleIn{from{opacity:0;letter-spacing:50px;filter:blur(8px)}to{opacity:1;filter:blur(0)}}
+
+/* SUBTITLE */
+.subtitle{font-family:'JetBrains Mono',monospace;font-size:clamp(.45rem,1.2vw,.6rem);font-weight:300;letter-spacing:clamp(4px,1.5vw,8px);color:rgba(156,163,175,.3);margin-bottom:56px;animation:subIn 1s .6s ease both;}
+@keyframes subIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* SEPARATOR LINE */
+.sep{width:60px;height:1px;margin:0 auto 56px;background:linear-gradient(90deg,transparent,rgba(168,85,247,.3),transparent);animation:sepIn 1s .8s ease both;}
+@keyframes sepIn{from{opacity:0;width:0}to{opacity:1;width:60px}}
+
+/* ENTER BUTTON */
+.enter{position:relative;display:inline-block;animation:enterIn 1s 1s ease both;}
+@keyframes enterIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.enter-btn{display:block;padding:20px 72px;background:transparent;border:none;color:rgba(192,132,252,.7);font-family:'JetBrains Mono',monospace;font-size:clamp(.6rem,1.5vw,.75rem);font-weight:700;letter-spacing:clamp(4px,1.5vw,8px);cursor:pointer;position:relative;text-decoration:none;transition:all .5s cubic-bezier(.4,0,.2,1);}
+.enter-btn::before{content:'';position:absolute;inset:0;border:1px solid rgba(168,85,247,.15);clip-path:polygon(16px 0,100% 0,calc(100% - 16px) 100%,0 100%);transition:all .5s;}
+.enter-btn::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(124,58,237,.06),rgba(236,72,153,.04));clip-path:polygon(16px 0,100% 0,calc(100% - 16px) 100%,0 100%);opacity:0;transition:opacity .5s;}
+.enter-btn:hover{color:#F9FAFB;transform:translateY(-2px);}
+.enter-btn:hover::before{border-color:rgba(168,85,247,.35);box-shadow:0 0 50px rgba(124,58,237,.1);}
+.enter-btn:hover::after{opacity:1;}
+.enter-btn:active{transform:scale(.97);}
+
+/* SHINE */
+.enter-shine{position:absolute;inset:0;clip-path:polygon(16px 0,100% 0,calc(100% - 16px) 100%,0 100%);overflow:hidden;pointer-events:none;}
+.enter-shine::after{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:linear-gradient(45deg,transparent 43%,rgba(255,255,255,.03) 50%,transparent 57%);animation:enterShine 4s ease infinite;}
+@keyframes enterShine{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+
+/* BOTTOM STATS */
+.stats{position:fixed;bottom:40px;left:0;right:0;z-index:10;display:flex;justify-content:center;gap:0;animation:statsIn 1s 1.3s ease both;}
+@keyframes statsIn{from{opacity:0}to{opacity:1}}
+.st{padding:0 clamp(16px,3vw,32px);border-right:1px solid rgba(168,85,247,.06);text-align:center;}
+.st:last-child{border-right:none;}
+.st-v{font-family:'Cormorant Garamond',serif;font-size:clamp(.9rem,2vw,1.3rem);font-weight:600;color:rgba(249,250,251,.6);}
+.st-l{font-family:'JetBrains Mono',monospace;font-size:clamp(.35rem,.8vw,.45rem);letter-spacing:2px;color:rgba(156,163,175,.2);margin-top:2px;}
+
+/* TOP CORNERS */
+.cr{position:fixed;z-index:5;}
+.cr span{display:block;position:absolute;background:rgba(168,85,247,.08);}
+.cr-tl{top:24px;left:24px;}.cr-tl span:first-child{width:40px;height:1px;}.cr-tl span:last-child{width:1px;height:40px;}
+.cr-tr{top:24px;right:24px;}.cr-tr span:first-child{width:40px;height:1px;right:0;}.cr-tr span:last-child{width:1px;height:40px;right:0;}
+.cr-bl{bottom:24px;left:24px;}.cr-bl span:first-child{width:40px;height:1px;bottom:0;}.cr-bl span:last-child{width:1px;height:40px;bottom:0;}
+.cr-br{bottom:24px;right:24px;}.cr-br span:first-child{width:40px;height:1px;right:0;bottom:0;}.cr-br span:last-child{width:1px;height:40px;right:0;bottom:0;}
+
+/* VERSION TAG */
+.vtag{position:fixed;top:28px;right:80px;z-index:10;font-family:'JetBrains Mono',monospace;font-size:.4rem;letter-spacing:3px;color:rgba(156,163,175,.15);animation:statsIn 1s 1.5s ease both;}
+
+/* MOBILE */
+@media(max-width:600px){
+  .diamond{width:100px;height:100px;margin-bottom:36px;}
+  .diamond-shape{width:64px;height:64px;}
+  .diamond-text{font-size:.9rem;}
+  .orbit-1{inset:-8px;}.orbit-2{inset:-18px;}.orbit-3{inset:-28px;}
+  .enter-btn{padding:16px 48px;}
+  .stats{bottom:24px;flex-wrap:wrap;justify-content:center;}
+  .st{padding:6px 16px;min-width:45%;border:none;border-bottom:1px solid rgba(168,85,247,.04);}
+  .cr{display:none;}
+  .vtag{display:none;}
+  .cur,.cur-ring{display:none;}
+  .sep{margin-bottom:40px;}
+}
+</style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div class="cur" id="cur"></div>
+<div class="cur-ring" id="ring"></div>
+
+<!-- CANVAS -->
+<canvas id="c"></canvas>
+
+<!-- VIGNETTE -->
+<div class="vignette"></div>
+
+<!-- CORNERS -->
+<div class="cr cr-tl"><span></span><span></span></div>
+<div class="cr cr-tr"><span></span><span></span></div>
+<div class="cr cr-bl"><span></span><span></span></div>
+<div class="cr cr-br"><span></span><span></span></div>
+
+<!-- VERSION -->
+<div class="vtag">V1.0</div>
+
+<!-- MAIN -->
+<div class="wrap">
+  <div class="diamond">
+    <div class="orbit orbit-1"><div class="orbit-dot orbit-dot-1"></div></div>
+    <div class="orbit orbit-2"><div class="orbit-dot orbit-dot-2"></div></div>
+    <div class="orbit orbit-3"></div>
+    <div class="diamond-shape"></div>
+    <div class="diamond-text">NX</div>
+  </div>
+
+  <h1 class="title">NOVEXA</h1>
+  <p class="subtitle">BEYOND THE HORIZON</p>
+
+  <div class="sep"></div>
+
+  <div class="enter">
+    <a href="https://novexa.org.in" class="enter-btn">
+      ENTER
+      <div class="enter-shine"></div>
+    </a>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="st"><div class="st-v">2X</div><div class="st-l">ROI RETURNS</div></div>
+  <div class="st"><div class="st-v">10%</div><div class="st-l">REFERRAL</div></div>
+  <div class="st"><div class="st-v">3</div><div class="st-l">CRYPTO</div></div>
+  <div class="st"><div class="st-v">24/7</div><div class="st-l">ACTIVE</div></div>
+</div>
+
+<script>
+// CURSOR
+const cr=document.getElementById('cur'),rn=document.getElementById('ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cr.style.left=mx+'px';cr.style.top=my+'px';});
+function animR(){rx+=(mx-rx)*.08;ry+=(my-ry)*.08;rn.style.left=rx+'px';rn.style.top=ry+'px';requestAnimationFrame(animR);}
+animR();
+document.querySelector('.enter-btn').addEventListener('mouseenter',()=>{cr.style.width='16px';cr.style.height='16px';cr.style.background='#EC4899';rn.style.width='50px';rn.style.height='50px';rn.style.borderColor='rgba(236,72,153,.3)';});
+document.querySelector('.enter-btn').addEventListener('mouseleave',()=>{cr.style.width='8px';cr.style.height='8px';cr.style.background='#A855F7';rn.style.width='36px';rn.style.height='36px';rn.style.borderColor='rgba(168,85,247,.3)';});
+
+// PARTICLES
+const canvas=document.getElementById('c'),ctx=canvas.getContext('2d');
+let W,H,pts=[];
+function resize(){W=canvas.width=innerWidth;H=canvas.height=innerHeight;}
+resize();window.addEventListener('resize',resize);
+class P{
+  constructor(){this.reset();}
+  reset(){this.x=Math.random()*W;this.y=Math.random()*H;this.s=Math.random()*.8+.1;this.vx=(Math.random()-.5)*.15;this.vy=(Math.random()-.5)*.15;this.o=Math.random()*.3+.03;this.h=Math.random()*30+270;}
+  update(){this.x+=this.vx;this.y+=this.vy;if(this.x<0||this.x>W||this.y<0||this.y>H)this.reset();}
+  draw(){ctx.save();ctx.globalAlpha=this.o;ctx.fillStyle=`hsl(${this.h},60%,65%)`;ctx.beginPath();ctx.arc(this.x,this.y,this.s,0,Math.PI*2);ctx.fill();ctx.restore();}
+}
+for(let i=0;i<60;i++)pts.push(new P());
+let t=0;
+function loop(){
+  ctx.clearRect(0,0,W,H);
+  t+=.003;
+  // Subtle glow orbs
+  [{x:W*.3+Math.sin(t)*80,y:H*.4+Math.cos(t*.7)*60,r:180,c:'rgba(124,58,237,.03)'},{x:W*.7+Math.sin(t*.8)*60,y:H*.6+Math.cos(t)*80,r:150,c:'rgba(236,72,153,.02)'}].forEach(o=>{const g=ctx.createRadialGradient(o.x,o.y,0,o.x,o.y,o.r);g.addColorStop(0,o.c);g.addColorStop(1,'transparent');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);});
+  pts.forEach(p=>{p.update();p.draw();});
+  // Connections
+  pts.forEach((a,i)=>{pts.slice(i+1).forEach(b=>{const d=Math.hypot(a.x-b.x,a.y-b.y);if(d<80){ctx.save();ctx.globalAlpha=(1-d/80)*.04;ctx.strokeStyle='hsl(280,50%,55%)';ctx.lineWidth=.3;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();ctx.restore();}});});
+  requestAnimationFrame(loop);
+}
+loop();
+</script>
+</body>
+</html>
