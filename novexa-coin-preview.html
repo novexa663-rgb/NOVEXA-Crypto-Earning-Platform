@@ -1,0 +1,1999 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#030010">
+<title>NOVEXA Token — Coming Soon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&family=Bricolage+Grotesque:wght@800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --p:#ff00cc;--o:#ff4d00;--y:#ffee00;--g:#00ff99;--c:#00ccff;--v:#cc00ff;
+  --bg:#030010;
+  --card:rgba(20,5,40,0.55);
+  --b:rgba(255,0,204,0.2);
+  --t:#fff;--td:#a8a8c8;--tf:#6a6a8a;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
+html,body{overflow-x:hidden;width:100%;max-width:100vw;}
+body{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  background:#030010;color:#fff;
+  line-height:1.6;-webkit-font-smoothing:antialiased;
+  position:relative;min-height:100vh;
+}
+
+/* BG */
+.mesh-bg{
+  position:fixed;inset:0;z-index:-3;pointer-events:none;
+  background:
+    radial-gradient(at 10% 20%,rgba(255,0,204,0.22) 0,transparent 50%),
+    radial-gradient(at 85% 25%,rgba(0,204,255,0.18) 0,transparent 50%),
+    radial-gradient(at 50% 70%,rgba(204,0,255,0.15) 0,transparent 50%),
+    radial-gradient(at 90% 90%,rgba(255,238,0,0.1) 0,transparent 50%),
+    radial-gradient(at 15% 95%,rgba(0,255,153,0.12) 0,transparent 50%),
+    #030010;
+  filter:blur(50px);
+  animation:meshShift 20s ease-in-out infinite alternate;
+}
+@keyframes meshShift{0%{transform:scale(1) rotate(0)}100%{transform:scale(1.1) rotate(6deg)}}
+.grid-overlay{
+  position:fixed;inset:0;z-index:-2;pointer-events:none;
+  background-image:
+    linear-gradient(rgba(255,0,204,0.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,204,255,0.04) 1px,transparent 1px);
+  background-size:40px 40px;
+  mask-image:radial-gradient(ellipse at center,black 30%,transparent 80%);
+}
+#particles{position:fixed;inset:0;z-index:-1;pointer-events:none;}
+
+/* Keyframes */
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+@keyframes rainbow{0%{background-position:0% center}100%{background-position:200% center}}
+@keyframes spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.65;transform:scale(1.06)}}
+@keyframes glowPulse{0%,100%{filter:drop-shadow(0 0 16px rgba(255,0,204,0.6))}50%{filter:drop-shadow(0 0 28px rgba(0,204,255,0.7))}}
+@keyframes orbit{0%{transform:rotate(0) translateX(110px) rotate(0)}100%{transform:rotate(360deg) translateX(110px) rotate(-360deg)}}
+@keyframes orbit2{0%{transform:rotate(0) translateX(80px) rotate(0)}100%{transform:rotate(-360deg) translateX(80px) rotate(360deg)}}
+@keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+@keyframes novexaGlow{0%,100%{box-shadow:0 0 20px rgba(255,0,204,0.4),0 0 40px rgba(0,204,255,0.2);transform:scale(1);}50%{box-shadow:0 0 32px rgba(255,0,204,0.7),0 0 60px rgba(0,204,255,0.4);transform:scale(1.05);}}
+
+/* ═══ TOP BAR ═══ */
+.top-bar{
+  position:fixed;top:0;left:0;right:0;z-index:95;
+  background:rgba(3,0,16,0.85);
+  backdrop-filter:blur(24px) saturate(180%);
+  -webkit-backdrop-filter:blur(24px) saturate(180%);
+  border-bottom:1px solid rgba(255,0,204,0.15);
+  display:flex;align-items:center;gap:.6rem;
+  padding:.5rem .75rem;
+  transition:transform .3s ease;
+}
+.top-bar.hidden{transform:translateY(-100%);}
+
+/* Logo left */
+.top-logo{flex-shrink:0;display:flex;align-items:center;text-decoration:none;}
+.top-logo-ring{
+  width:40px;height:40px;border-radius:50%;
+  background:conic-gradient(var(--p),var(--o),var(--y),var(--g),var(--c),var(--v),var(--p));
+  padding:2.5px;animation:spin 4s linear infinite;
+  box-shadow:0 0 12px rgba(255,0,204,0.6);
+}
+.top-logo-inner{
+  width:100%;height:100%;border-radius:50%;
+  background:radial-gradient(circle at 35% 35%,#1a0035,#000);
+  display:flex;align-items:center;justify-content:center;
+}
+.top-logo-inner span{
+  font-family:'Sora',sans-serif;font-weight:900;font-size:1.05rem;
+  background:linear-gradient(135deg,var(--p),var(--y),var(--c));
+  background-size:200%;
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  animation:rainbow 3s linear infinite;
+}
+
+/* Center ticker */
+.market-bar{
+  flex:1;min-width:0;
+  position:relative;overflow:hidden;
+}
+.market-bar::before,.market-bar::after{
+  content:'';position:absolute;top:0;bottom:0;width:24px;z-index:2;pointer-events:none;
+}
+.market-bar::before{left:0;background:linear-gradient(90deg,rgba(3,0,16,0.95),transparent);}
+.market-bar::after{right:0;background:linear-gradient(-90deg,rgba(3,0,16,0.95),transparent);}
+
+.market-track{
+  display:flex;align-items:center;gap:1.2rem;
+  white-space:nowrap;
+  animation:ticker 60s linear infinite;
+  width:max-content;
+}
+
+.coin-item{
+  display:inline-flex;align-items:center;gap:.4rem;
+  padding:.2rem .7rem;border-radius:99px;
+  background:rgba(255,255,255,0.03);
+  border:1px solid rgba(255,255,255,0.06);
+}
+.coin-icon{
+  width:20px;height:20px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.65rem;font-weight:900;
+  flex-shrink:0;color:#fff;
+}
+.coin-symbol{
+  font-family:'Sora',sans-serif;font-weight:800;font-size:.72rem;color:#fff;
+}
+.coin-price{
+  font-family:'JetBrains Mono',monospace;font-weight:700;font-size:.72rem;color:#fff;
+  transition:color .25s;
+}
+.coin-price.up{color:var(--g);}
+.coin-price.down{color:#ff5555;}
+.coin-change{font-family:'Sora',sans-serif;font-weight:700;font-size:.65rem;}
+.coin-change.up{color:var(--g);}
+.coin-change.down{color:#ff5555;}
+
+/* NOVEXA special */
+.coin-item.novexa{
+  background:linear-gradient(135deg,rgba(255,0,204,0.15),rgba(0,204,255,0.1),rgba(204,0,255,0.1));
+  background-size:200% 100%;
+  border:1.5px solid rgba(255,0,204,0.4);
+  padding:.3rem .9rem;
+  animation:novexaGlow 3s ease-in-out infinite,rainbow 4s linear infinite;
+  text-decoration:none;
+}
+.coin-item.novexa .coin-icon{
+  background:conic-gradient(var(--p),var(--o),var(--y),var(--g),var(--c),var(--v),var(--p));
+  animation:spin 4s linear infinite;
+  padding:1.5px;width:22px;height:22px;
+}
+.coin-item.novexa .coin-icon-inner{
+  width:100%;height:100%;border-radius:50%;
+  background:radial-gradient(circle at 35% 35%,#1a0035,#000);
+  display:flex;align-items:center;justify-content:center;
+}
+.coin-item.novexa .coin-icon-inner span{
+  font-size:.7rem;font-weight:900;
+  background:linear-gradient(135deg,var(--p),var(--y),var(--c));
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+}
+.coin-item.novexa .coin-symbol{
+  background:linear-gradient(90deg,var(--p),var(--o),var(--y),var(--g),var(--c),var(--v),var(--p));
+  background-size:200%;
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  animation:rainbow 3s linear infinite;font-weight:900;
+}
+.coin-soon{
+  font-family:'Sora',sans-serif;font-weight:800;font-size:.6rem;
+  letter-spacing:.1em;text-transform:uppercase;
+  color:var(--y);
+  display:inline-flex;align-items:center;gap:.25rem;
+  background:rgba(255,238,0,0.12);
+  padding:.12rem .45rem;border-radius:99px;
+  border:1px solid rgba(255,238,0,0.3);
+}
+.coin-soon-dot{
+  width:5px;height:5px;border-radius:50%;background:var(--y);
+  box-shadow:0 0 6px var(--y);animation:pulse 1.5s ease infinite;
+}
+
+/* Menu button right */
+.top-menu{
+  flex-shrink:0;
+  width:40px;height:40px;border-radius:10px;
+  background:rgba(255,0,204,0.12);
+  border:1px solid rgba(255,0,204,0.3);
+  color:#fff;font-size:1.15rem;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .2s;
+}
+.top-menu:active{transform:scale(0.92);background:rgba(255,0,204,0.25);}
+
+@media(max-width:600px){
+  .top-bar{padding:.45rem .6rem;gap:.5rem;}
+  .top-logo-ring{width:36px;height:36px;}
+  .top-menu{width:36px;height:36px;font-size:1.05rem;}
+  .coin-item{padding:.15rem .55rem;gap:.3rem;}
+  .coin-icon{width:18px;height:18px;font-size:.58rem;}
+  .coin-symbol,.coin-price{font-size:.66rem;}
+  .coin-change{font-size:.58rem;}
+}
+
+/* ═══ DRAWER ═══ */
+.mobile-drawer{
+  position:fixed;top:0;right:0;
+  width:280px;max-width:85vw;height:100vh;
+  background:rgba(8,4,28,0.98);backdrop-filter:blur(28px);
+  border-left:1px solid var(--b);
+  z-index:200;transform:translateX(100%);
+  transition:transform .35s cubic-bezier(.4,0,.2,1);
+  padding:6rem 1.5rem 2rem;
+  display:flex;flex-direction:column;gap:.5rem;
+  overflow-y:auto;
+}
+.mobile-drawer.open{transform:translateX(0);}
+
+.drawer-header{
+  position:absolute;top:0;left:0;right:0;
+  padding:1.25rem 1.5rem;
+  border-bottom:1px solid rgba(255,0,204,0.15);
+  display:flex;align-items:center;gap:.7rem;
+  background:linear-gradient(135deg,rgba(255,0,204,0.05),rgba(0,204,255,0.03));
+}
+.drawer-header .drawer-logo-ring{
+  width:42px;height:42px;border-radius:50%;
+  background:conic-gradient(var(--p),var(--o),var(--y),var(--g),var(--c),var(--v),var(--p));
+  padding:2.5px;animation:spin 4s linear infinite;
+}
+.drawer-header .drawer-logo-inner{
+  width:100%;height:100%;border-radius:50%;
+  background:radial-gradient(circle at 35% 35%,#1a0035,#000);
+  display:flex;align-items:center;justify-content:center;
+}
+.drawer-header .drawer-logo-inner span{
+  font-family:'Sora',sans-serif;font-weight:900;font-size:1.1rem;
+  background:linear-gradient(135deg,var(--p),var(--y),var(--c));
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  animation:rainbow 3s linear infinite;
+}
+.drawer-brand{
+  font-family:'Sora',sans-serif;font-weight:900;font-size:1.2rem;
+  letter-spacing:.08em;
+  background:linear-gradient(90deg,var(--p),var(--o),var(--y),var(--g),var(--c),var(--v),var(--p));
+  background-size:200%;
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  animation:rainbow 3s linear infinite;
+}
+.drawer-tag{font-size:.6rem;color:var(--y);letter-spacing:.15em;text-transform:uppercase;font-weight:700;margin-top:.15rem;}
+
+.mobile-drawer a{
+  color:var(--td);text-decoration:none;
+  padding:1rem 1.1rem;border-radius:12px;
+  font-size:.95rem;font-weight:600;font-family:'Sora',sans-serif;
+  border-bottom:1px solid rgba(255,0,204,0.08);
+  transition:all .2s;
+}
+.mobile-drawer a:active{background:rgba(255,0,204,0.15);color:#fff;}
+
+.drawer-overlay{
+  position:fixed;inset:0;
+  background:rgba(0,0,0,0.6);backdrop-filter:blur(4px);
+  z-index:150;opacity:0;pointer-events:none;
+  transition:opacity .3s;
+}
+.drawer-overlay.show{opacity:1;pointer-events:all;}
+.drawer-close{
+  position:absolute;top:1rem;right:1rem;
+  width:36px;height:36px;border-radius:50%;
+  background:rgba(255,0,204,0.15);border:1px solid var(--b);
+  color:#fff;font-size:1.1rem;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  z-index:10;
+}
+
+/* ═══ HERO ═══ */
+.hero{
+  min-height:100vh;
+  padding:5rem 1rem 3rem;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;text-align:center;
+}
+.hero-content{max-width:900px;width:100%;animation:fadeUp 1s ease both;}
+
+.pre-badge{
+  display:inline-flex;align-items:center;gap:.5rem;
+  padding:.45rem 1.1rem;border-radius:99px;
+  background:linear-gradient(135deg,rgba(255,238,0,0.15),rgba(255,77,0,0.08));
+  border:1.5px solid rgba(255,238,0,0.4);
+  backdrop-filter:blur(20px);
+  color:var(--y);font-family:'Sora',sans-serif;
+  font-size:.7rem;font-weight:800;letter-spacing:.15em;
+  text-transform:uppercase;margin-bottom:1.5rem;
+  box-shadow:0 0 24px rgba(255,238,0,0.2);
+  animation:pulse 3s ease infinite;
+}
+.pre-badge .rocket{font-size:.95rem;animation:float 2s ease infinite;}
+
+/* 3D Coin */
+.coin-wrap{display:flex;justify-content:center;margin-bottom:2rem;position:relative;}
+.coin-scene{position:relative;perspective:1000px;display:flex;align-items:center;justify-content:center;}
+.coin-3d{
+  width:clamp(140px,38vw,200px);
+  aspect-ratio:1;border-radius:50%;
+  background:conic-gradient(var(--p),var(--o),var(--y),var(--g),var(--c),var(--v),var(--p));
+  padding:6px;position:relative;transform-style:preserve-3d;
+  animation:coinSpin 10s linear infinite,glowPulse 4s ease-in-out infinite;
+  box-shadow:0 0 50px rgba(255,0,204,0.4);
+}
+@keyframes coinSpin{0%{transform:rotateY(0) rotateX(15deg)}100%{transform:rotateY(360deg) rotateX(15deg)}}
+.coin-face{
+  width:100%;height:100%;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#3a0080,#000 75%);
+  display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+}
+.coin-face::before{
+  content:'';position:absolute;inset:8px;border-radius:50%;
+  background:radial-gradient(circle at 30% 25%,rgba(255,255,255,0.18),transparent 45%);
+}
+.coin-letter{
+  font-family:'Bricolage Grotesque','Sora',sans-serif;font-weight:900;
+  font-size:clamp(3rem,10vw,4.8rem);
+  background:linear-gradient(135deg,var(--p),var(--y),var(--c));
+  background-size:200%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  animation:rainbow 3s linear infinite;position:relative;z-index:2;
+  filter:drop-shadow(0 0 16px rgba(255,0,204,0.6));
+}
+.orbit-elem{position:absolute;top:50%;left:50%;width:0;height:0;}
+.orbit-elem.e1{animation:orbit 7s linear infinite;}
+.orbit-elem.e1::after{content:'⚡';font-size:1.3rem;position:absolute;top:-10px;left:-10px;filter:drop-shadow(0 0 8px rgba(255,238,0,0.9));}
+.orbit-elem.e2{animation:orbit2 5s linear infinite;}
+.orbit-elem.e2::after{content:'💎';font-size:1.1rem;position:absolute;top:-8px;left:-8px;filter:drop-shadow(0 0 6px rgba(0,204,255,0.8));}
+
+.hero h1{
+  font-family:'Bricolage Grotesque','Sora',sans-serif;font-weight:900;
+  font-size:clamp(2.2rem,9vw,4.8rem);
+  line-height:1;letter-spacing:-.035em;margin-bottom:1.25rem;
+}
+.hero h1 .grad{
+  background:linear-gradient(90deg,var(--p),var(--o),var(--y),var(--g),var(--c),var(--v),var(--p));
+  background-size:200%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  animation:rainbow 4s linear infinite;
+  filter:drop-shadow(0 0 24px rgba(255,0,204,0.4));
+  display:inline-block;
+}
+.hero p{
+  color:var(--td);font-size:clamp(.92rem,2.5vw,1.1rem);max-width:540px;
+  margin:0 auto 1.75rem;padding:0 .5rem;
+}
+
+/* COUNTDOWN */
+.countdown-wrap{margin:2rem 0 1.5rem;}
+.countdown-label{
+  font-family:'Sora',sans-serif;font-size:.7rem;font-weight:700;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--td);margin-bottom:1rem;
+}
+.countdown{display:grid;grid-template-columns:repeat(4,1fr);gap:.55rem;max-width:480px;margin:0 auto;}
+.cd-box{
+  background:rgba(20,5,40,0.65);backdrop-filter:blur(20px) saturate(180%);
+  border:1px solid var(--b);border-radius:14px;padding:.9rem .4rem;
+  position:relative;overflow:hidden;
+}
+.cd-box::before{
+  content:'';position:absolute;inset:0;border-radius:14px;padding:1px;
+  background:linear-gradient(135deg,var(--p),var(--c));
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;
+  opacity:.45;pointer-events:none;
+}
+.cd-val{
+  font-family:'Bricolage Grotesque','Sora',sans-serif;font-weight:900;
+  font-size:clamp(1.4rem,5.5vw,2.4rem);line-height:1;
+  background:linear-gradient(135deg,var(--p),var(--y));
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  letter-spacing:-.02em;
+}
+.cd-lbl{
+  font-size:clamp(.5rem,1.5vw,.62rem);color:var(--td);text-transform:uppercase;
+  letter-spacing:.1em;font-weight:700;margin-top:.35rem;
+}
+
+/* CTA */
+.hero-cta{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap;margin-top:1rem;padding:0 .5rem;}
+.btn-primary{
+  flex:1;min-width:0;max-width:240px;
+  padding:1rem 1.5rem;
+  background:linear-gradient(135deg,var(--y),var(--o));
+  border:none;border-radius:14px;color:#000;
+  font-family:'Sora',sans-serif;font-size:.92rem;font-weight:800;
+  cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:.4rem;
+  transition:all .3s;box-shadow:0 8px 24px rgba(255,238,0,0.4);
+}
+.btn-primary:active{transform:scale(0.97);}
+.btn-ghost{
+  flex:1;min-width:0;max-width:240px;
+  padding:1rem 1.5rem;
+  background:rgba(255,255,255,0.05);backdrop-filter:blur(16px);
+  border:1.5px solid rgba(255,255,255,0.15);border-radius:14px;color:#fff;
+  font-family:'Sora',sans-serif;font-size:.92rem;font-weight:800;
+  cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:.4rem;
+  transition:all .3s;
+}
+.btn-ghost:active{transform:scale(0.97);background:rgba(255,0,204,0.12);}
+
+.trust-row{
+  display:flex;align-items:center;gap:.6rem;margin-top:2rem;
+  flex-wrap:wrap;justify-content:center;padding:0 .5rem;
+}
+.trust-item{
+  display:flex;align-items:center;gap:.35rem;
+  font-size:clamp(.7rem,2vw,.78rem);color:var(--td);font-weight:600;
+  background:rgba(20,5,40,0.4);backdrop-filter:blur(10px);
+  border:1px solid rgba(255,0,204,0.12);
+  padding:.4rem .75rem;border-radius:99px;
+}
+.trust-ico{
+  width:18px;height:18px;border-radius:5px;
+  background:rgba(255,238,0,0.15);border:1px solid rgba(255,238,0,0.3);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.65rem;color:var(--y);
+}
+
+/* SECTIONS */
+section{padding:4rem 1rem;position:relative;}
+.section-wrap{max-width:1300px;margin:0 auto;}
+.section-label{
+  display:inline-flex;align-items:center;gap:.5rem;
+  padding:.35rem 1rem;border-radius:99px;
+  background:rgba(255,0,204,0.12);border:1px solid rgba(255,0,204,0.3);
+  font-family:'Sora',sans-serif;font-size:.68rem;font-weight:800;
+  letter-spacing:.15em;text-transform:uppercase;color:#ff66dd;margin-bottom:1rem;
+}
+.section-title{
+  font-family:'Bricolage Grotesque','Sora',sans-serif;font-weight:900;
+  font-size:clamp(1.8rem,6.5vw,3.5rem);line-height:1.05;letter-spacing:-.02em;
+  margin-bottom:1rem;
+  background:linear-gradient(135deg,#fff,#fff 35%,var(--p) 70%,var(--v));
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+}
+.section-sub{color:var(--td);font-size:clamp(.9rem,2.3vw,1.05rem);max-width:620px;margin-bottom:2.5rem;}
+
+/* WAITLIST */
+.waitlist-box{
+  background:linear-gradient(135deg,rgba(255,238,0,0.1),rgba(255,77,0,0.06),rgba(255,0,204,0.08));
+  border:1.5px solid rgba(255,238,0,0.35);
+  border-radius:22px;padding:2rem 1.25rem;text-align:center;
+  position:relative;overflow:hidden;
+}
+.waitlist-box::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 20% 30%,rgba(255,238,0,0.2),transparent 50%),radial-gradient(circle at 80% 70%,rgba(255,77,0,0.15),transparent 50%);
+}
+.waitlist-box > *{position:relative;z-index:1;}
+.waitlist-box h3{
+  font-family:'Bricolage Grotesque','Sora',sans-serif;font-weight:900;
+  font-size:clamp(1.35rem,4.5vw,2rem);margin-bottom:.5rem;
+  background:linear-gradient(135deg,var(--y),var(--o));
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  line-height:1.15;
+}
+.waitlist-box p{color:var(--td);margin-bottom:1.5rem;font-size:clamp(.85rem,2.2vw,.95rem);padding:0 .25rem;}
+.subscribe-form{
+  display:flex;flex-direction:column;gap:.5rem;
+  max-width:440px;margin:0 auto;
+  background:rgba(0,0,0,0.55);backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:.45rem;
+}
+@media(min-width:520px){.subscribe-form{flex-direction:row;}}
+.subscribe-input{
+  flex:1;padding:.85rem 1rem;background:transparent;border:none;
+  color:#fff;font-family:inherit;font-size:.9rem;outline:none;min-width:0;
+}
+.subscribe-input::placeholder{color:var(--td);}
+.subscribe-btn{
+  padding:.85rem 1.4rem;
+  background:linear-gradient(135deg,var(--y),var(--o));
+  border:none;border-radius:10px;color:#000;cursor:pointer;
+  font-family:'Sora',sans-serif;font-size:.85rem;font-weight:800;
+  transition:all .3s;white-space:nowrap;
+}
+.subscribe-btn:active{transform:scale(0.97);}
+.waitlist-count{
+  margin-top:1.25rem;font-size:clamp(.75rem,2vw,.85rem);color:var(--td);
+  display:flex;align-items:center;gap:.5rem;justify-content:center;flex-wrap:wrap;padding:0 .5rem;
+}
+.waitlist-count strong{
+  background:linear-gradient(135deg,var(--y),var(--o));
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  font-family:'Sora',sans-serif;font-weight:900;font-size:clamp(.92rem,2.5vw,1.05rem);
+}
+
+/* ROADMAP */
+.roadmap{position:relative;margin-top:2rem;}
+.roadmap::before{
+  content:'';position:absolute;left:22px;top:20px;bottom:20px;width:2.5px;
+  background:linear-gradient(180deg,var(--p),var(--o),var(--y),var(--g),var(--c),var(--v));
+  border-radius:99px;box-shadow:0 0 16px rgba(255,0,204,0.4);
+}
+.road-item{position:relative;padding-left:64px;margin-bottom:1.5rem;animation:fadeUp .7s ease both;}
+.road-dot{
+  position:absolute;left:0;top:6px;
+  width:46px;height:46px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.15rem;border:4px solid #030010;z-index:2;
+  font-weight:900;color:#fff;background:rgba(255,255,255,0.08);
+}
+.road-item.next .road-dot{
+  background:linear-gradient(135deg,var(--y),var(--o));
+  box-shadow:0 0 24px rgba(255,238,0,0.7);animation:pulse 2s ease infinite;
+}
+.road-item.global .road-dot{
+  background:conic-gradient(var(--p),var(--o),var(--y),var(--g),var(--c),var(--v),var(--p));
+  box-shadow:0 0 24px rgba(255,0,204,0.8);animation:spin 4s linear infinite;
+}
+.road-card{
+  background:var(--card);backdrop-filter:blur(20px);
+  border:1px solid var(--b);border-radius:16px;padding:1.2rem 1.1rem;
+}
+.road-quarter{
+  display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;
+  font-family:'Sora',sans-serif;font-size:.68rem;font-weight:800;letter-spacing:.08em;
+  text-transform:uppercase;margin-bottom:.5rem;color:var(--td);
+}
+.road-item.next .road-quarter{color:var(--y);}
+.road-item.global .road-quarter{
+  background:linear-gradient(90deg,var(--p),var(--y),var(--c));
+  background-size:200%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  animation:rainbow 3s linear infinite;
+}
+.road-status{
+  padding:.18rem .55rem;border-radius:99px;font-size:.56rem;letter-spacing:.05em;
+  background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:var(--tf);
+}
+.road-item.next .road-status{background:rgba(255,238,0,0.15);border:1px solid rgba(255,238,0,0.4);color:var(--y);}
+.road-item.global .road-status{background:rgba(255,0,204,0.2);border:1px solid rgba(255,0,204,0.4);color:#ff99ee;}
+.road-title{
+  font-family:'Bricolage Grotesque','Sora',sans-serif;font-weight:800;
+  font-size:clamp(1.05rem,3vw,1.25rem);margin-bottom:.4rem;letter-spacing:-.01em;line-height:1.2;
+}
+.road-desc{color:var(--td);font-size:clamp(.85rem,2.2vw,.92rem);line-height:1.6;}
+@media(min-width:768px){
+  .roadmap::before{left:35px;width:3px;}
+  .road-item{padding-left:90px;margin-bottom:2rem;}
+  .road-dot{left:12px;width:50px;height:50px;border-width:5px;font-size:1.25rem;}
+}
+
+/* TOKENOMICS */
+.tokenomics{display:flex;flex-direction:column;gap:2rem;align-items:center;}
+.donut-wrap{display:flex;justify-content:center;align-items:center;position:relative;width:100%;}
+.donut{
+  width:clamp(200px,52vw,280px);
+  aspect-ratio:1;border-radius:50%;
+  background:conic-gradient(var(--p) 0% 30%,var(--o) 30% 50%,var(--y) 50% 65%,var(--g) 65% 80%,var(--c) 80% 90%,var(--v) 90% 100%);
+  position:relative;animation:spin 40s linear infinite;
+  box-shadow:0 0 50px rgba(255,0,204,0.4),0 0 100px rgba(0,204,255,0.2);
+}
+.donut::after{
+  content:'';position:absolute;inset:30px;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#1a0035,#000 70%);
+}
+.donut-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;z-index:2;}
+.donut-total{
+  font-family:'Bricolage Grotesque','Sora',sans-serif;font-weight:900;
+  font-size:clamp(1.8rem,5.5vw,2.4rem);
+  background:linear-gradient(135deg,var(--p),var(--y),var(--c));
+  background-size:200%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  animation:rainbow 3s linear infinite;line-height:1;
+}
+.donut-label{font-size:clamp(.6rem,1.8vw,.7rem);color:var(--td);letter-spacing:.16em;text-transform:uppercase;margin-top:.35rem;font-weight:700;}
+.donut-supply{font-size:clamp(.55rem,1.5vw,.62rem);color:var(--tf);margin-top:.2rem;}
+
+.tokenomics-list{width:100%;display:flex;flex-direction:column;gap:.6rem;}
+.tok-item{
+  display:flex;align-items:center;gap:.7rem;padding:.85rem 1rem;
+  background:var(--card);backdrop-filter:blur(18px);
+  border:1px solid var(--b);border-radius:14px;
+}
+.tok-color{width:12px;height:12px;border-radius:4px;flex-shrink:0;box-shadow:0 0 10px currentColor;}
+.tok-info{flex:1;min-width:0;}
+.tok-name{font-weight:700;font-size:.85rem;margin-bottom:.1rem;}
+.tok-amount{font-size:.7rem;color:var(--td);font-family:'JetBrains Mono',monospace;}
+.tok-percent{font-family:'Bricolage Grotesque','Sora',sans-serif;font-weight:900;font-size:1.15rem;flex-shrink:0;}
+@media(min-width:980px){.tokenomics{flex-direction:row;gap:3rem;}}
+
+.locked-notice{
+  margin-top:1.5rem;display:flex;align-items:center;gap:.85rem;
+  background:linear-gradient(135deg,rgba(255,238,0,0.1),rgba(255,77,0,0.05));
+  border:1px solid rgba(255,238,0,0.3);border-radius:14px;padding:1rem 1.1rem;
+}
+.locked-icon{font-size:1.4rem;flex-shrink:0;}
+.locked-text{flex:1;font-size:clamp(.82rem,2.2vw,.88rem);color:var(--td);line-height:1.55;}
+.locked-text strong{color:var(--y);font-weight:800;}
+
+/* FEATURES */
+.features-grid{display:grid;grid-template-columns:1fr;gap:1rem;}
+@media(min-width:640px){.features-grid{grid-template-columns:1fr 1fr;}}
+@media(min-width:980px){.features-grid{grid-template-columns:repeat(3,1fr);gap:1.5rem;}}
+.feat-card{
+  background:var(--card);backdrop-filter:blur(20px);
+  border:1px solid var(--b);border-radius:18px;
+  padding:1.4rem 1.25rem;position:relative;overflow:hidden;
+}
+.feat-card::after{
+  content:'';position:absolute;top:-50px;right:-50px;width:130px;height:130px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,0,204,0.15),transparent 70%);pointer-events:none;
+}
+.feat-card:nth-child(2)::after{background:radial-gradient(circle,rgba(0,204,255,0.15),transparent 70%);}
+.feat-card:nth-child(3)::after{background:radial-gradient(circle,rgba(255,238,0,0.15),transparent 70%);}
+.feat-card:nth-child(4)::after{background:radial-gradient(circle,rgba(0,255,153,0.15),transparent 70%);}
+.feat-card:nth-child(5)::after{background:radial-gradient(circle,rgba(204,0,255,0.15),transparent 70%);}
+.feat-card:nth-child(6)::after{background:radial-gradient(circle,rgba(255,77,0,0.15),transparent 70%);}
+.feat-icon{
+  width:46px;height:46px;border-radius:12px;
+  background:linear-gradient(135deg,rgba(255,0,204,0.2),rgba(204,0,255,0.08));
+  border:1px solid rgba(255,0,204,0.3);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.3rem;margin-bottom:.85rem;
+}
+.feat-title{font-family:'Sora',sans-serif;font-weight:800;font-size:clamp(.95rem,2.5vw,1.05rem);margin-bottom:.4rem;}
+.feat-desc{color:var(--td);font-size:clamp(.8rem,2.1vw,.85rem);line-height:1.55;}
+
+/* FAQ */
+.faq-list{display:flex;flex-direction:column;gap:.5rem;margin-top:1.5rem;}
+.faq-item{
+  background:var(--card);backdrop-filter:blur(20px);
+  border:1px solid var(--b);border-radius:14px;overflow:hidden;transition:all .3s;
+}
+.faq-item.open{background:rgba(255,0,204,0.06);border-color:rgba(255,0,204,0.4);}
+.faq-q{
+  padding:1rem 1.2rem;cursor:pointer;
+  display:flex;align-items:center;justify-content:space-between;gap:.75rem;
+  font-family:'Sora',sans-serif;font-weight:700;font-size:clamp(.88rem,2.3vw,.98rem);
+}
+.faq-icon{
+  width:28px;height:28px;border-radius:50%;
+  background:rgba(255,0,204,0.15);border:1px solid rgba(255,0,204,0.3);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1rem;color:var(--p);transition:transform .35s;flex-shrink:0;
+}
+.faq-item.open .faq-icon{transform:rotate(45deg);background:linear-gradient(135deg,var(--p),var(--v));border-color:transparent;color:#fff;}
+.faq-a{
+  max-height:0;overflow:hidden;
+  transition:max-height .4s ease,padding .4s ease;
+  padding:0 1.2rem;color:var(--td);
+  font-size:clamp(.82rem,2.1vw,.9rem);line-height:1.6;
+}
+.faq-item.open .faq-a{max-height:400px;padding:0 1.2rem 1.1rem;}
+
+/* CTA */
+.cta-box{
+  background:linear-gradient(135deg,rgba(255,238,0,0.12),rgba(255,77,0,0.08),rgba(255,0,204,0.1));
+  background-size:200%;
+  border:1.5px solid rgba(255,238,0,0.35);
+  border-radius:24px;padding:3rem 1.25rem;text-align:center;
+  position:relative;overflow:hidden;animation:rainbow 8s linear infinite;
+}
+.cta-box::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 20% 30%,rgba(255,238,0,0.25),transparent 50%),radial-gradient(circle at 80% 70%,rgba(255,0,204,0.2),transparent 50%);
+}
+.cta-box > *{position:relative;z-index:1;}
+.cta-box h2{
+  font-family:'Bricolage Grotesque','Sora',sans-serif;font-weight:900;
+  font-size:clamp(1.7rem,5.5vw,3.2rem);line-height:1.05;letter-spacing:-.02em;
+  background:linear-gradient(135deg,#fff,var(--y),var(--p),var(--c));
+  background-size:200%;
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  margin-bottom:1rem;animation:rainbow 4s linear infinite;
+}
+.cta-box p{color:rgba(255,255,255,0.8);margin-bottom:2rem;font-size:clamp(.92rem,2.4vw,1.1rem);max-width:540px;margin-left:auto;margin-right:auto;padding:0 .25rem;}
+
+/* FOOTER */
+footer{border-top:1px solid var(--b);padding:3rem 1rem 1.5rem;background:rgba(3,0,16,0.5);}
+.footer-grid{
+  max-width:1300px;margin:0 auto;
+  display:grid;grid-template-columns:1fr;gap:2rem;margin-bottom:2rem;
+}
+@media(min-width:640px){.footer-grid{grid-template-columns:1.5fr 1fr 1fr;gap:2.5rem;}}
+.footer-logo{display:flex;align-items:center;gap:.6rem;margin-bottom:.8rem;}
+.footer-logo .logo-ring{
+  width:36px;height:36px;border-radius:50%;
+  background:conic-gradient(var(--p),var(--o),var(--y),var(--g),var(--c),var(--v),var(--p));
+  padding:2px;animation:spin 4s linear infinite;
+}
+.footer-logo .logo-ring-inner{
+  width:100%;height:100%;border-radius:50%;
+  background:radial-gradient(circle at 35% 35%,#1a0035,#000);
+  display:flex;align-items:center;justify-content:center;
+}
+.footer-logo .logo-ring-inner span{
+  font-family:'Sora',sans-serif;font-weight:900;font-size:1rem;
+  background:linear-gradient(135deg,var(--p),var(--y),var(--c));
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  animation:rainbow 3s linear infinite;
+}
+.footer-logo .footer-brand-text{
+  font-family:'Sora',sans-serif;font-weight:900;font-size:1.1rem;letter-spacing:.08em;
+  background:linear-gradient(90deg,var(--p),var(--o),var(--y),var(--g),var(--c),var(--v),var(--p));
+  background-size:200%;
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  animation:rainbow 3s linear infinite;
+}
+.footer-tagline{color:var(--td);font-size:.85rem;line-height:1.6;margin-bottom:1.25rem;max-width:280px;}
+.footer-col h4{
+  font-family:'Sora',sans-serif;font-weight:800;font-size:.74rem;
+  letter-spacing:.1em;text-transform:uppercase;color:#fff;margin-bottom:.85rem;
+}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:.55rem;}
+.footer-col a{color:var(--td);font-size:.85rem;text-decoration:none;}
+.social{display:flex;gap:.5rem;flex-wrap:wrap;}
+.social a{
+  width:40px;height:40px;border-radius:50%;
+  background:var(--card);backdrop-filter:blur(20px);
+  border:1px solid var(--b);
+  display:flex;align-items:center;justify-content:center;
+  text-decoration:none;font-size:1.05rem;transition:all .3s;
+}
+.footer-bottom{
+  max-width:1300px;margin:0 auto;padding-top:1.5rem;
+  border-top:1px solid rgba(255,255,255,0.06);
+  display:flex;flex-direction:column;align-items:center;gap:.75rem;
+  color:var(--tf);font-size:clamp(.7rem,1.8vw,.78rem);text-align:center;
+}
+@media(min-width:640px){.footer-bottom{flex-direction:row;justify-content:space-between;text-align:left;}}
+.footer-bottom a{color:var(--p);text-decoration:none;}
+.footer-bottom .legal{display:flex;gap:1.25rem;}
+
+::-webkit-scrollbar{width:6px;}
+::-webkit-scrollbar-track{background:#030010;}
+::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--p),var(--v));border-radius:99px;}
+::selection{background:rgba(255,0,204,0.4);color:#fff;}
+
+/* ═══ THEME SWITCHER ═══ */
+body[data-theme="light"]{
+  --bg:#f0f0fa;
+  --card:rgba(255,255,255,0.7);
+  --b:rgba(124,58,237,0.2);
+  --t:#1a1a2e;
+  --td:#4a4a6a;
+  --tf:#8a8aaa;
+  background:#f0f0fa;color:#1a1a2e;
+}
+body[data-theme="light"] .mesh-bg{filter:blur(50px) brightness(2);opacity:0.3;}
+body[data-theme="light"] .grid-overlay{background-image:linear-gradient(rgba(124,58,237,0.06) 1px,transparent 1px),linear-gradient(90deg,rgba(124,58,237,0.06) 1px,transparent 1px);}
+body[data-theme="light"] .top-bar{background:rgba(255,255,255,0.85);border-bottom:1px solid rgba(124,58,237,0.15);}
+body[data-theme="light"] .road-dot{border-color:#f0f0fa;}
+body[data-theme="light"] .footer-bottom div{color:#4a4a6a;}
+
+body[data-theme="neon"]{
+  --bg:#000;
+  --card:rgba(255,0,204,0.1);
+  --b:rgba(255,0,204,0.5);
+  background:#000;
+}
+body[data-theme="neon"] .mesh-bg{filter:blur(40px) saturate(2);}
+body[data-theme="neon"] .grid-overlay{opacity:1.5;}
+
+.theme-switcher{
+  position:fixed;bottom:1.5rem;right:1.5rem;z-index:80;
+  display:flex;gap:.4rem;
+  background:rgba(20,5,40,0.85);backdrop-filter:blur(20px) saturate(180%);
+  border:1px solid var(--b);border-radius:99px;
+  padding:.4rem;box-shadow:0 8px 32px rgba(0,0,0,0.4);
+}
+.theme-btn{
+  width:36px;height:36px;border-radius:50%;
+  background:transparent;border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.9rem;transition:all .2s;
+}
+.theme-btn.active{background:linear-gradient(135deg,var(--p),var(--v));box-shadow:0 0 16px rgba(255,0,204,0.6);}
+.theme-btn:hover{transform:scale(1.1);}
+@media(max-width:600px){
+  .theme-switcher{bottom:1rem;right:1rem;padding:.3rem;}
+  .theme-btn{width:32px;height:32px;font-size:.8rem;}
+}
+
+/* ═══ GALAXY BG ═══ */
+.galaxy-bg{
+  position:fixed;inset:0;z-index:-4;pointer-events:none;
+  overflow:hidden;
+}
+.planet{
+  position:absolute;border-radius:50%;
+  filter:blur(0.5px);
+  animation:planetFloat 20s ease-in-out infinite;
+}
+.planet-1{
+  width:280px;height:280px;
+  top:10%;left:-100px;
+  background:radial-gradient(circle at 30% 30%,#ff00cc 0%,#7b0066 40%,#1a0030 100%);
+  box-shadow:0 0 80px rgba(255,0,204,0.4),inset -30px -30px 60px rgba(0,0,0,0.5);
+  animation:planetFloat 25s ease-in-out infinite;
+}
+.planet-2{
+  width:180px;height:180px;
+  top:60%;right:-50px;
+  background:radial-gradient(circle at 35% 35%,#00ccff 0%,#0066b3 40%,#001a30 100%);
+  box-shadow:0 0 60px rgba(0,204,255,0.4),inset -20px -20px 40px rgba(0,0,0,0.5);
+  animation:planetFloat 30s ease-in-out infinite reverse;
+}
+.planet-3{
+  width:140px;height:140px;
+  top:30%;right:15%;
+  background:radial-gradient(circle at 30% 30%,#ffee00 0%,#cc9900 40%,#332200 100%);
+  box-shadow:0 0 50px rgba(255,238,0,0.3),inset -16px -16px 32px rgba(0,0,0,0.5);
+  animation:planetFloat 22s ease-in-out infinite;
+}
+.planet-ring{
+  position:absolute;
+  border-radius:50%;
+  border:2px solid;
+  animation:spin 30s linear infinite;
+}
+.planet-1::after{
+  content:'';position:absolute;
+  inset:-30%;
+  border:3px solid rgba(255,0,204,0.2);
+  border-radius:50%;
+  transform:rotateX(70deg);
+}
+@keyframes planetFloat{
+  0%,100%{transform:translate(0,0) rotate(0);}
+  33%{transform:translate(40px,-30px) rotate(120deg);}
+  66%{transform:translate(-30px,40px) rotate(240deg);}
+}
+@media(max-width:768px){
+  .planet-1{width:200px;height:200px;}
+  .planet-2{width:140px;height:140px;}
+  .planet-3{width:100px;height:100px;}
+}
+
+/* ═══ PRICE PREDICTION ═══ */
+.pred-box{
+  background:var(--card);backdrop-filter:blur(24px) saturate(180%);
+  border:1px solid var(--b);border-radius:24px;
+  padding:1.75rem;position:relative;overflow:hidden;
+  margin-top:1rem;
+}
+.pred-box::before{
+  content:'';position:absolute;inset:0;border-radius:24px;padding:1.5px;
+  background:linear-gradient(135deg,var(--y),var(--p),var(--c));
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;
+  opacity:.5;pointer-events:none;
+}
+.pred-header{
+  display:flex;justify-content:space-between;align-items:flex-start;
+  gap:1rem;margin-bottom:1.25rem;flex-wrap:wrap;
+}
+.pred-label{
+  font-family:'Sora',sans-serif;font-weight:800;font-size:.95rem;
+  color:#fff;margin-bottom:.4rem;
+}
+.pred-current{font-size:.85rem;color:var(--td);}
+.pred-target{text-align:right;}
+.pred-target-val{
+  font-family:'Bricolage Grotesque','Sora',sans-serif;font-weight:900;
+  font-size:clamp(1.5rem,4vw,2.4rem);
+  background:linear-gradient(135deg,var(--y),var(--p),var(--c));
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  line-height:1;
+}
+.pred-target-lbl{
+  font-size:.7rem;color:var(--g);font-weight:700;
+  margin-top:.2rem;letter-spacing:.05em;
+}
+.pred-chart{
+  width:100%;height:200px;margin:1rem 0;
+}
+.pred-points{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem;
+  margin-top:1rem;
+}
+.pred-point{
+  text-align:center;padding:.75rem .4rem;
+  background:rgba(0,0,0,0.3);border:1px solid var(--b);
+  border-radius:12px;
+}
+.pp-q{font-size:.62rem;color:var(--td);letter-spacing:.08em;text-transform:uppercase;font-weight:700;margin-bottom:.3rem;}
+.pp-p{
+  font-family:'Sora',sans-serif;font-weight:900;font-size:clamp(.85rem,2.5vw,1.1rem);
+  background:linear-gradient(135deg,var(--y),var(--p));
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  margin-bottom:.2rem;
+}
+.pp-l{font-size:.65rem;color:var(--g);font-weight:700;}
+.pred-disclaimer{
+  margin-top:1rem;padding:.7rem 1rem;
+  background:rgba(255,77,0,0.08);border:1px solid rgba(255,77,0,0.2);
+  border-radius:10px;font-size:.75rem;color:#ffaa66;
+  text-align:center;
+}
+
+/* ═══ TEAM ═══ */
+.team-grid{
+  display:grid;grid-template-columns:1fr;gap:1.25rem;margin-top:2rem;
+}
+@media(min-width:640px){.team-grid{grid-template-columns:1fr 1fr;}}
+@media(min-width:980px){.team-grid{grid-template-columns:repeat(4,1fr);}}
+.team-card{
+  background:var(--card);backdrop-filter:blur(20px);
+  border:1px solid var(--b);border-radius:18px;
+  padding:1.5rem 1.25rem;text-align:center;
+  position:relative;transition:all .3s;
+}
+.team-card:hover{transform:translateY(-4px);border-color:rgba(255,0,204,0.4);}
+.team-badge{
+  display:inline-flex;align-items:center;gap:.25rem;
+  position:absolute;top:.75rem;right:.75rem;
+  padding:.25rem .55rem;border-radius:99px;
+  background:rgba(0,255,153,0.12);border:1px solid rgba(0,255,153,0.3);
+  color:var(--g);font-size:.6rem;font-weight:800;letter-spacing:.05em;
+}
+.team-avatar{
+  width:80px;height:80px;border-radius:50%;
+  margin:0 auto 1rem;
+  display:flex;align-items:center;justify-content:center;
+  font-size:2.2rem;position:relative;
+  box-shadow:0 8px 24px rgba(0,0,0,0.4);
+  border:3px solid rgba(255,255,255,0.1);
+}
+.team-mask{
+  filter:drop-shadow(0 0 8px rgba(0,0,0,0.5));
+}
+.team-name{
+  font-family:'Sora',sans-serif;font-weight:800;font-size:.95rem;
+  margin-bottom:.25rem;
+  background:linear-gradient(135deg,#fff,var(--p));
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+}
+.team-role{font-size:.72rem;color:var(--y);font-weight:700;letter-spacing:.05em;margin-bottom:.6rem;}
+.team-bio{font-size:.78rem;color:var(--td);line-height:1.5;margin-bottom:1rem;}
+.team-social{display:flex;gap:.4rem;justify-content:center;}
+.team-social a{
+  width:32px;height:32px;border-radius:50%;
+  background:rgba(255,0,204,0.1);border:1px solid var(--b);
+  display:flex;align-items:center;justify-content:center;
+  text-decoration:none;font-size:.85rem;transition:all .2s;
+}
+.team-social a:hover{background:rgba(255,0,204,0.25);transform:scale(1.1);}
+
+/* ═══ PRESS ═══ */
+.press-grid{
+  display:grid;grid-template-columns:1fr;gap:1rem;
+}
+@media(min-width:640px){.press-grid{grid-template-columns:1fr 1fr;}}
+@media(min-width:980px){.press-grid{grid-template-columns:repeat(3,1fr);}}
+.press-card{
+  background:var(--card);backdrop-filter:blur(20px);
+  border:1px solid var(--b);border-radius:16px;
+  padding:1.25rem;transition:all .3s;
+}
+.press-card:hover{transform:translateY(-4px);border-color:rgba(255,238,0,0.4);}
+.press-logo{
+  font-family:'Sora',sans-serif;font-weight:900;font-size:1rem;
+  margin-bottom:.75rem;
+}
+.press-quote{
+  font-size:.85rem;color:var(--td);line-height:1.55;
+  font-style:italic;margin-bottom:.75rem;
+}
+.press-quote::before{content:'"';font-size:1.5rem;color:var(--p);font-weight:900;line-height:0;}
+.press-quote::after{content:'"';color:var(--p);}
+.press-date{
+  font-size:.7rem;color:var(--tf);font-weight:600;
+  letter-spacing:.06em;text-transform:uppercase;
+}
+
+/* ═══ PARTNERS ═══ */
+.partners-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:.85rem;
+}
+@media(min-width:640px){.partners-grid{grid-template-columns:repeat(4,1fr);}}
+.partner-card{
+  background:var(--card);backdrop-filter:blur(20px);
+  border:1px solid var(--b);border-radius:14px;
+  padding:1.1rem .85rem;text-align:center;
+  transition:all .3s;
+}
+.partner-card:hover{transform:translateY(-3px);border-color:rgba(255,0,204,0.4);}
+.partner-icon{
+  width:48px;height:48px;border-radius:14px;
+  margin:0 auto .65rem;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.5rem;box-shadow:0 4px 12px rgba(0,0,0,0.3);
+}
+.partner-name{
+  font-family:'Sora',sans-serif;font-weight:800;font-size:.78rem;
+  margin-bottom:.15rem;
+}
+.partner-type{
+  font-size:.62rem;color:var(--td);
+  text-transform:uppercase;letter-spacing:.08em;font-weight:700;
+}
+
+/* ═══ GLOBAL MAP ═══ */
+.map-box{
+  background:var(--card);backdrop-filter:blur(20px);
+  border:1px solid var(--b);border-radius:22px;
+  padding:1.5rem;position:relative;overflow:hidden;
+  margin-top:1rem;
+}
+.map-stats{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;
+  margin-bottom:1.25rem;
+}
+.map-stat-item{
+  text-align:center;padding:.75rem .3rem;
+  background:rgba(0,0,0,0.3);border:1px solid var(--b);
+  border-radius:12px;
+}
+.map-stat-val{
+  font-family:'Bricolage Grotesque','Sora',sans-serif;font-weight:900;
+  font-size:clamp(1.2rem,3.5vw,1.8rem);
+  background:linear-gradient(135deg,var(--p),var(--c));
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  line-height:1;
+}
+.map-stat-lbl{
+  font-size:.62rem;color:var(--td);
+  text-transform:uppercase;letter-spacing:.08em;font-weight:700;
+  margin-top:.3rem;
+}
+.world-map{
+  width:100%;height:auto;
+  background:radial-gradient(ellipse at center,rgba(255,0,204,0.05),transparent);
+  border-radius:14px;margin-bottom:1.25rem;
+}
+.world-map svg{width:100%;height:auto;display:block;}
+.country-list{
+  display:flex;flex-wrap:wrap;gap:.4rem;justify-content:center;
+}
+.country-pill{
+  display:inline-flex;align-items:center;gap:.3rem;
+  padding:.35rem .8rem;border-radius:99px;
+  background:rgba(255,0,204,0.08);border:1px solid var(--b);
+  font-size:.72rem;font-weight:600;color:var(--td);
+}
+.country-pill:hover{background:rgba(255,0,204,0.15);color:#fff;}
+
+/* Real Map (Leaflet) */
+
+.world-map{
+  background:transparent !important;
+  padding:0 !important;
+}
+/* Dark theme tiles */
+
+
+
+
+
+
+
+/* Custom marker */
+
+
+
+@keyframes markerPulse{
+  0%{transform:scale(0.5);opacity:1;}
+  100%{transform:scale(2);opacity:0;}
+}
+
+/* Popup */
+
+
+
+
+
+
+
+.world-map{
+  width:100%;border-radius:14px;
+  background:rgba(255,0,204,0.02);
+  border:1px solid rgba(255,0,204,0.1);
+  padding:1rem;
+  margin-bottom:1.25rem;
+  overflow:hidden;
+}
+.world-map svg{width:100%;height:auto;display:block;}
+</style>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+
+
+</script>
+</head>
+<body>
+
+
+<!-- Galaxy 3D Planets -->
+<div class="galaxy-bg">
+  <div class="planet planet-1"></div>
+  <div class="planet planet-2"></div>
+  <div class="planet planet-3"></div>
+</div>
+
+<!-- Theme Switcher -->
+<div class="theme-switcher">
+  <button class="theme-btn active" data-theme="dark" title="Dark">🌙</button>
+  <button class="theme-btn" data-theme="light" title="Light">☀️</button>
+  <button class="theme-btn" data-theme="neon" title="Neon">⚡</button>
+</div>
+
+<div class="mesh-bg"></div>
+<div class="grid-overlay"></div>
+<canvas id="particles"></canvas>
+
+<!-- TOP BAR -->
+<div class="top-bar" id="topBar">
+  <a href="#" class="top-logo">
+    <div class="top-logo-ring">
+      <div class="top-logo-inner"><span>N</span></div>
+    </div>
+  </a>
+  <div class="market-bar">
+    <div class="market-track" id="marketTrack"></div>
+  </div>
+  <button class="top-menu" id="menuBtn">☰</button>
+</div>
+
+<!-- DRAWER -->
+<div class="drawer-overlay" id="drawerOverlay"></div>
+<div class="mobile-drawer" id="mobileDrawer">
+  <div class="drawer-header">
+    <div class="drawer-logo-ring">
+      <div class="drawer-logo-inner"><span>N</span></div>
+    </div>
+    <div>
+      <div class="drawer-brand">NOVEXA</div>
+      <div class="drawer-tag">✦ Coming Soon</div>
+    </div>
+  </div>
+  <button class="drawer-close" id="drawerClose">✕</button>
+  <a href="#roadmap">🗺️ Roadmap</a>
+  <a href="#tokenomics">💎 Tokenomics</a>
+  <a href="#prediction">📈 Forecast</a>
+  <a href="#team">👥 Team</a>
+  <a href="#press">📰 Press</a>
+  <a href="#partners">🤝 Partners</a>
+  <a href="#global">🌍 Global</a>
+  <a href="#features">⚡ Features</a>
+  <a href="#faq">❓ FAQ</a>
+  <a href="#waitlist" style="background:linear-gradient(135deg,rgba(255,238,0,0.15),rgba(255,77,0,0.1));border:1px solid rgba(255,238,0,0.3);color:var(--y);margin-top:.5rem;">🔔 Join Waitlist</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="pre-badge">
+      <span class="rocket">🚀</span>
+      Pre-Launch · Coming Soon
+    </div>
+    <div class="coin-wrap">
+      <div class="coin-scene">
+        <div class="coin-3d">
+          <div class="coin-face">
+            <div class="coin-letter">N</div>
+          </div>
+        </div>
+        <div class="orbit-elem e1"></div>
+        <div class="orbit-elem e2"></div>
+      </div>
+    </div>
+    <h1>Next Big<br><span class="grad">Crypto Launch.</span></h1>
+    <p>Be among the first to know when NOVEXA Token goes live. Get early-bird bonuses, exclusive airdrops & 100x potential.</p>
+    <div class="countdown-wrap">
+      <div class="countdown-label">⏰ Token Launch In</div>
+      <div class="countdown">
+        <div class="cd-box"><div class="cd-val" id="days">--</div><div class="cd-lbl">Days</div></div>
+        <div class="cd-box"><div class="cd-val" id="hours">--</div><div class="cd-lbl">Hours</div></div>
+        <div class="cd-box"><div class="cd-val" id="mins">--</div><div class="cd-lbl">Mins</div></div>
+        <div class="cd-box"><div class="cd-val" id="secs">--</div><div class="cd-lbl">Secs</div></div>
+      </div>
+    </div>
+    <div class="hero-cta">
+      <a href="#waitlist" class="btn-primary">🔔 Join Waitlist</a>
+      <a href="#roadmap" class="btn-ghost">📋 Roadmap</a>
+    </div>
+    <div class="trust-row">
+      <div class="trust-item"><div class="trust-ico">⏳</div>Audit Soon</div>
+      <div class="trust-item"><div class="trust-ico">🔒</div>LP Locked</div>
+      <div class="trust-item"><div class="trust-ico">✓</div>BEP20</div>
+    </div>
+  </div>
+</section>
+
+<!-- WAITLIST -->
+<section id="waitlist">
+  <div class="section-wrap">
+    <div class="waitlist-box">
+      <div style="font-size:2.5rem;margin-bottom:.5rem;">🔔</div>
+      <h3>Be Among the<br>First 1000</h3>
+      <p>Get early access, exclusive airdrops worth $50, and 10% bonus tokens on launch day.</p>
+      <div class="subscribe-form">
+        <input type="email" class="subscribe-input" placeholder="your@email.com">
+        <button class="subscribe-btn">Join Waitlist →</button>
+      </div>
+      <div class="waitlist-count">
+        <span><strong>2,847</strong> joined ·</span>
+        <span><strong>153</strong> early-bird spots 🎁</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section id="roadmap">
+  <div class="section-wrap">
+    <div class="section-label">🗺️ Launch Plan</div>
+    <h2 class="section-title">Roadmap to<br>Launch & Beyond.</h2>
+    <p class="section-sub">Our journey from development to global adoption across 50+ countries.</p>
+    <div class="roadmap">
+      <div class="road-item next">
+        <div class="road-dot">⚡</div>
+        <div class="road-card">
+          <div class="road-quarter">🔄 Q2 2027 <span class="road-status">UP NEXT</span></div>
+          <div class="road-title">Smart Contract Audit</div>
+          <div class="road-desc">CertiK security audit in progress. Vulnerability testing & audit report. Targeting 95+/100 score.</div>
+        </div>
+      </div>
+      <div class="road-item">
+        <div class="road-dot">2</div>
+        <div class="road-card">
+          <div class="road-quarter">⏳ Q3 2027 <span class="road-status">UPCOMING</span></div>
+          <div class="road-title">Token Launch & DEX Listing</div>
+          <div class="road-desc">Public launch on PancakeSwap with USDT/NOVEXA & BNB/NOVEXA pairs. LP $500K locked for 2 years.</div>
+        </div>
+      </div>
+      <div class="road-item">
+        <div class="road-dot">3</div>
+        <div class="road-card">
+          <div class="road-quarter">⏳ Q4 2027 <span class="road-status">UPCOMING</span></div>
+          <div class="road-title">Staking Platform</div>
+          <div class="road-desc">Earn passive rewards holding NOVEXA. Flexible (12% APY) & locked (up to 142% APY) options.</div>
+        </div>
+      </div>
+      <div class="road-item">
+        <div class="road-dot">4</div>
+        <div class="road-card">
+          <div class="road-quarter">⏳ Q1 2028 <span class="road-status">UPCOMING</span></div>
+          <div class="road-title">Yield Farming Launch</div>
+          <div class="road-desc">High APY farming pools. Liquidity mining program. Earn NOVEXA + partner tokens.</div>
+        </div>
+      </div>
+      <div class="road-item">
+        <div class="road-dot">5</div>
+        <div class="road-card">
+          <div class="road-quarter">⏳ Q2 2028 <span class="road-status">UPCOMING</span></div>
+          <div class="road-title">CEX Listing</div>
+          <div class="road-desc">Major exchange listings — Binance, Coinbase, KuCoin, Gate.io for maximum global exposure.</div>
+        </div>
+      </div>
+      <div class="road-item global">
+        <div class="road-dot">🌐</div>
+        <div class="road-card">
+          <div class="road-quarter">🌈 Q3 2028 <span class="road-status">GLOBAL</span></div>
+          <div class="road-title">Global Expansion · 50+ Countries</div>
+          <div class="road-desc">Multi-language support, regional partnerships, worldwide adoption of NOVEXA ecosystem.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TOKENOMICS -->
+<section id="tokenomics">
+  <div class="section-wrap">
+    <div class="section-label">💎 Tokenomics</div>
+    <h2 class="section-title">Fair Launch.<br>Transparent.</h2>
+    <p class="section-sub">100M NOVEXA fixed supply — fairly distributed at launch. No pre-mine, no whales.</p>
+    <div class="tokenomics">
+      <div class="donut-wrap">
+        <div class="donut">
+          <div class="donut-center">
+            <div class="donut-total">100M</div>
+            <div class="donut-label">NOVEXA</div>
+            <div class="donut-supply">Fixed Supply</div>
+          </div>
+        </div>
+      </div>
+      <div class="tokenomics-list">
+        <div class="tok-item"><div class="tok-color" style="background:#ff00cc;color:#ff00cc;"></div><div class="tok-info"><div class="tok-name">Community Rewards</div><div class="tok-amount">30M NVX</div></div><div class="tok-percent" style="color:#ff00cc;">30%</div></div>
+        <div class="tok-item"><div class="tok-color" style="background:#ff4d00;color:#ff4d00;"></div><div class="tok-info"><div class="tok-name">Staking Rewards</div><div class="tok-amount">20M NVX</div></div><div class="tok-percent" style="color:#ff4d00;">20%</div></div>
+        <div class="tok-item"><div class="tok-color" style="background:#ffee00;color:#ffee00;"></div><div class="tok-info"><div class="tok-name">Liquidity Pool</div><div class="tok-amount">15M NVX</div></div><div class="tok-percent" style="color:#ffee00;">15%</div></div>
+        <div class="tok-item"><div class="tok-color" style="background:#00ff99;color:#00ff99;"></div><div class="tok-info"><div class="tok-name">Marketing & Growth</div><div class="tok-amount">15M NVX</div></div><div class="tok-percent" style="color:#00ff99;">15%</div></div>
+        <div class="tok-item"><div class="tok-color" style="background:#00ccff;color:#00ccff;"></div><div class="tok-info"><div class="tok-name">Team (Locked 2yr)</div><div class="tok-amount">10M NVX</div></div><div class="tok-percent" style="color:#00ccff;">10%</div></div>
+        <div class="tok-item"><div class="tok-color" style="background:#cc00ff;color:#cc00ff;"></div><div class="tok-info"><div class="tok-name">Treasury Reserve</div><div class="tok-amount">10M NVX</div></div><div class="tok-percent" style="color:#cc00ff;">10%</div></div>
+      </div>
+    </div>
+    <div class="locked-notice">
+      <div class="locked-icon">🔒</div>
+      <div class="locked-text"><strong>Smart Contract Locked.</strong> Team tokens locked for 2 years. LP locked at launch. Contract address published at <strong>Q3 2027</strong>.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="section-wrap">
+    <div class="section-label">⚡ Why NOVEXA</div>
+    <h2 class="section-title">Built Different.<br>Built to Last.</h2>
+    <p class="section-sub">Six pillars that will make NOVEXA the most innovative crypto launch of 2027.</p>
+    <div class="features-grid">
+      <div class="feat-card"><div class="feat-icon">🔒</div><div class="feat-title">Audited & Secure</div><div class="feat-desc">CertiK audit before launch. Open-source code. No honeypot, no hidden mint functions.</div></div>
+      <div class="feat-card"><div class="feat-icon">🔥</div><div class="feat-title">Auto-Burn</div><div class="feat-desc">2% of every transaction burned forever. Reduces supply, increases scarcity over time.</div></div>
+      <div class="feat-card"><div class="feat-icon">💰</div><div class="feat-title">Multiple Income</div><div class="feat-desc">Staking, yield farming, MLM binary income & capital appreciation — all in one ecosystem.</div></div>
+      <div class="feat-card"><div class="feat-icon">⚡</div><div class="feat-title">Lightning Fast</div><div class="feat-desc">Built on BEP20 — sub-3-second transactions, gas fees from $0.05.</div></div>
+      <div class="feat-card"><div class="feat-icon">🌐</div><div class="feat-title">Global Vision</div><div class="feat-desc">Targeting 50+ countries within 12 months. Multi-language. Regional partnerships.</div></div>
+      <div class="feat-card"><div class="feat-icon">🏆</div><div class="feat-title">Real Utility</div><div class="feat-desc">Not a meme — powers a full MLM platform live at novexa.org.in with real earnings.</div></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ─── 1. GALAXY BG (added below mesh-bg) ─── -->
+
+<!-- ─── PRICE PREDICTION CHART ─── -->
+<section id="prediction">
+  <div class="section-wrap">
+    <div class="section-label">📈 Price Forecast</div>
+    <h2 class="section-title">Projected Growth.<br>Real Potential.</h2>
+    <p class="section-sub">Conservative price projections based on tokenomics, market cap targets and adoption curve.</p>
+
+    <div class="pred-box">
+      <div class="pred-header">
+        <div>
+          <div class="pred-label">📊 NOVEXA Price Projection</div>
+          <div class="pred-current">Launch Price: <span style="color:var(--y);font-weight:800;">$0.0150</span></div>
+        </div>
+        <div class="pred-target">
+          <div class="pred-target-val">$1.00+</div>
+          <div class="pred-target-lbl">67x Target by Q3 2028</div>
+        </div>
+      </div>
+
+      <svg class="pred-chart" viewBox="0 0 800 280" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="predGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#ff00cc" stop-opacity="0.6"/>
+            <stop offset="100%" stop-color="#ff00cc" stop-opacity="0"/>
+          </linearGradient>
+          <linearGradient id="predLine" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#ffee00"/>
+            <stop offset="40%" stop-color="#ff00cc"/>
+            <stop offset="70%" stop-color="#cc00ff"/>
+            <stop offset="100%" stop-color="#00ccff"/>
+          </linearGradient>
+        </defs>
+        <g stroke="rgba(255,255,255,0.05)" stroke-width="1">
+          <line x1="0" y1="56" x2="800" y2="56"/>
+          <line x1="0" y1="112" x2="800" y2="112"/>
+          <line x1="0" y1="168" x2="800" y2="168"/>
+          <line x1="0" y1="224" x2="800" y2="224"/>
+        </g>
+        <path d="M 0,240 L 100,235 L 200,220 L 300,180 L 400,140 L 500,100 L 600,70 L 700,40 L 800,20 L 800,280 L 0,280 Z" fill="url(#predGrad)"/>
+        <path d="M 0,240 L 100,235 L 200,220 L 300,180 L 400,140 L 500,100 L 600,70 L 700,40 L 800,20" stroke="url(#predLine)" stroke-width="3" fill="none" stroke-linecap="round" style="filter:drop-shadow(0 0 10px rgba(255,0,204,0.7));"/>
+        <circle cx="100" cy="235" r="5" fill="#ffee00"/>
+        <circle cx="300" cy="180" r="5" fill="#ff00cc"/>
+        <circle cx="500" cy="100" r="5" fill="#cc00ff"/>
+        <circle cx="800" cy="20" r="7" fill="#00ccff">
+          <animate attributeName="r" values="7;11;7" dur="1.5s" repeatCount="indefinite"/>
+        </circle>
+      </svg>
+
+      <div class="pred-points">
+        <div class="pred-point"><div class="pp-q">Q3 2027</div><div class="pp-p">$0.0150</div><div class="pp-l">Launch</div></div>
+        <div class="pred-point"><div class="pp-q">Q1 2028</div><div class="pp-p">$0.10</div><div class="pp-l">+566%</div></div>
+        <div class="pred-point"><div class="pp-q">Q2 2028</div><div class="pp-p">$0.35</div><div class="pp-l">+2233%</div></div>
+        <div class="pred-point"><div class="pp-q">Q3 2028</div><div class="pp-p">$1.00+</div><div class="pp-l">+6566%</div></div>
+      </div>
+
+      <div class="pred-disclaimer">⚠️ Projections based on market analysis. Not financial advice.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── TEAM ─── -->
+<section id="team">
+  <div class="section-wrap">
+    <div class="section-label">👥 Core Team</div>
+    <h2 class="section-title">Privacy-First<br>Team. Verified.</h2>
+    <p class="section-sub">Anonymous founders with verified credentials. Doxxed to CertiK & KYC providers for security.</p>
+
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-badge">✓ KYC Verified</div>
+        <div class="team-avatar" style="background:linear-gradient(135deg,#ff00cc,#cc00ff);">
+          <div class="team-mask">🦊</div>
+        </div>
+        <div class="team-name">NovexaFounder.eth</div>
+        <div class="team-role">Founder & Visionary</div>
+        <div class="team-bio">10+ years in DeFi. Ex-engineer at top L1 blockchain. Doxxed to CertiK.</div>
+        <div class="team-social">
+          <a href="#" title="Twitter">🐦</a>
+          <a href="#" title="LinkedIn">💼</a>
+          <a href="#" title="GitHub">💻</a>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-badge">✓ Doxxed</div>
+        <div class="team-avatar" style="background:linear-gradient(135deg,#00ccff,#00ff99);">
+          <div class="team-mask">🐺</div>
+        </div>
+        <div class="team-name">CodeWolf.sol</div>
+        <div class="team-role">Lead Smart Contract Dev</div>
+        <div class="team-bio">Solidity expert. Audited 50+ contracts. Built on BSC, Polygon, Solana.</div>
+        <div class="team-social">
+          <a href="#">🐦</a><a href="#">💻</a><a href="#">📝</a>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-badge">✓ KYC Verified</div>
+        <div class="team-avatar" style="background:linear-gradient(135deg,#ffee00,#ff4d00);">
+          <div class="team-mask">🦉</div>
+        </div>
+        <div class="team-name">CryptoOwl.bnb</div>
+        <div class="team-role">CMO & Marketing Lead</div>
+        <div class="team-bio">Scaled 3 crypto projects to 100K+ holders. Influencer partnerships expert.</div>
+        <div class="team-social">
+          <a href="#">🐦</a><a href="#">📺</a><a href="#">💬</a>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-badge">✓ Verified</div>
+        <div class="team-avatar" style="background:linear-gradient(135deg,#cc00ff,#00ccff);">
+          <div class="team-mask">🦅</div>
+        </div>
+        <div class="team-name">SecureEagle.bsc</div>
+        <div class="team-role">Security & Operations</div>
+        <div class="team-bio">CertiK auditor background. Ensures all contracts pass security checks.</div>
+        <div class="team-social">
+          <a href="#">🐦</a><a href="#">💼</a><a href="#">💻</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PRESS / FEATURED IN ─── -->
+<section id="press">
+  <div class="section-wrap">
+    <div class="section-label">📰 Featured In</div>
+    <h2 class="section-title">Trusted by the<br>Crypto Community.</h2>
+    <p class="section-sub">Press coverage and mentions from leading crypto media outlets and platforms.</p>
+
+    <div class="press-grid">
+      <div class="press-card">
+        <div class="press-logo" style="color:#0066cc;">📰 Forbes</div>
+        <div class="press-quote">"NOVEXA is among the most promising token launches of 2027 with its dual MLM-DeFi model."</div>
+        <div class="press-date">May 2027</div>
+      </div>
+      <div class="press-card">
+        <div class="press-logo" style="color:#ff6b00;">⛓️ CoinDesk</div>
+        <div class="press-quote">"A unique fusion of binary MLM economics and BEP20 token utility — watch this space."</div>
+        <div class="press-date">May 2027</div>
+      </div>
+      <div class="press-card">
+        <div class="press-logo" style="color:#f3ba2f;">🟡 BSC News</div>
+        <div class="press-quote">"NOVEXA's pre-launch waitlist surpassed 2,800 in just 3 weeks. Massive community demand."</div>
+        <div class="press-date">May 2027</div>
+      </div>
+      <div class="press-card">
+        <div class="press-logo" style="color:#00ccff;">📊 CryptoSlate</div>
+        <div class="press-quote">"Audit-first approach, locked liquidity, and 30% community allocation set NOVEXA apart."</div>
+        <div class="press-date">May 2027</div>
+      </div>
+      <div class="press-card">
+        <div class="press-logo" style="color:#ff00cc;">🚀 Crypto News</div>
+        <div class="press-quote">"The most anticipated BEP20 launch of Q3 2027 with realistic 67x potential."</div>
+        <div class="press-date">May 2027</div>
+      </div>
+      <div class="press-card">
+        <div class="press-logo" style="color:#00ff99;">💎 DeFi Pulse</div>
+        <div class="press-quote">"NOVEXA token economics rival some of the top staking projects in the industry."</div>
+        <div class="press-date">May 2027</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PARTNERS ─── -->
+<section id="partners">
+  <div class="section-wrap">
+    <div class="section-label">🤝 Partners</div>
+    <h2 class="section-title">Built with the<br>Best in Crypto.</h2>
+    <p class="section-sub">NOVEXA integrates with leading wallets, exchanges, and infrastructure providers.</p>
+
+    <div class="partners-grid">
+      <div class="partner-card">
+        <div class="partner-icon" style="background:linear-gradient(135deg,#f6851b,#e2761b);">🦊</div>
+        <div class="partner-name">MetaMask</div>
+        <div class="partner-type">Wallet</div>
+      </div>
+      <div class="partner-card">
+        <div class="partner-icon" style="background:linear-gradient(135deg,#3375bb,#1a73e8);">🛡️</div>
+        <div class="partner-name">Trust Wallet</div>
+        <div class="partner-type">Wallet</div>
+      </div>
+      <div class="partner-card">
+        <div class="partner-icon" style="background:linear-gradient(135deg,#1fc7d4,#00b3c9);">🥞</div>
+        <div class="partner-name">PancakeSwap</div>
+        <div class="partner-type">DEX</div>
+      </div>
+      <div class="partner-card">
+        <div class="partner-icon" style="background:linear-gradient(135deg,#f3ba2f,#ff9900);">🟡</div>
+        <div class="partner-name">Binance</div>
+        <div class="partner-type">CEX (Q2 2028)</div>
+      </div>
+      <div class="partner-card">
+        <div class="partner-icon" style="background:linear-gradient(135deg,#00b4d8,#0077b6);">🔍</div>
+        <div class="partner-name">CertiK</div>
+        <div class="partner-type">Audit</div>
+      </div>
+      <div class="partner-card">
+        <div class="partner-icon" style="background:linear-gradient(135deg,#8247e5,#5b25c4);">🟣</div>
+        <div class="partner-name">WalletConnect</div>
+        <div class="partner-type">Infra</div>
+      </div>
+      <div class="partner-card">
+        <div class="partner-icon" style="background:linear-gradient(135deg,#0033ad,#003d52);">📈</div>
+        <div class="partner-name">CoinMarketCap</div>
+        <div class="partner-type">Listing</div>
+      </div>
+      <div class="partner-card">
+        <div class="partner-icon" style="background:linear-gradient(135deg,#8dc63f,#3cb878);">🦎</div>
+        <div class="partner-name">CoinGecko</div>
+        <div class="partner-type">Listing</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── GLOBAL MAP ─── -->
+<section id="global">
+  <div class="section-wrap">
+    <div class="section-label">🌍 Global Reach</div>
+    <h2 class="section-title">Worldwide<br>Community.</h2>
+    <p class="section-sub">Waitlist members from <strong style="color:var(--p);">47 countries</strong> already. Join the global movement.</p>
+
+    <div class="map-box">
+      <div class="map-stats">
+        <div class="map-stat-item">
+          <div class="map-stat-val">47</div>
+          <div class="map-stat-lbl">Countries</div>
+        </div>
+        <div class="map-stat-item">
+          <div class="map-stat-val">2,847</div>
+          <div class="map-stat-lbl">Waitlist</div>
+        </div>
+        <div class="map-stat-item">
+          <div class="map-stat-val">24/7</div>
+          <div class="map-stat-lbl">Support</div>
+        </div>
+      </div>
+
+      <!-- World Map SVG with country dots -->
+      <div class="world-map">
+        <svg viewBox="0 0 1000 500" preserveAspectRatio="xMidYMid meet" style="width:100%;height:auto;display:block;">
+          <defs>
+            <filter id="mapGlow">
+              <feGaussianBlur stdDeviation="2.5" result="b"/>
+              <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+            <radialGradient id="oceanGrad" cx="50%" cy="50%">
+              <stop offset="0%" stop-color="rgba(255,0,204,0.04)"/>
+              <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
+            </radialGradient>
+          </defs>
+          
+          <!-- Ocean background -->
+          <rect width="1000" height="500" fill="url(#oceanGrad)"/>
+          
+          <!-- All continents - detailed shapes -->
+          <g fill="rgba(255,0,204,0.1)" stroke="rgba(255,0,204,0.3)" stroke-width="0.7" stroke-linejoin="round">
+            
+            <!-- NORTH AMERICA -->
+            <path d="M 110,75 Q 130,55 165,60 L 200,65 Q 235,75 270,90 L 295,115 Q 305,140 295,170 L 280,200 L 260,220 Q 240,235 215,235 L 195,240 Q 185,255 195,275 L 200,290 L 180,295 L 170,275 Q 155,255 145,225 L 135,195 Q 125,165 120,135 L 115,105 Z"/>
+            
+            <!-- Mexico -->
+            <path d="M 195,275 L 215,280 L 225,295 Q 230,310 215,318 L 200,315 L 190,300 Z"/>
+            
+            <!-- Central America -->
+            <path d="M 215,318 L 230,322 L 245,335 L 240,348 L 225,345 L 218,335 Z"/>
+            
+            <!-- Greenland -->
+            <path d="M 325,45 L 365,40 Q 395,50 400,75 L 395,100 L 370,108 L 340,100 L 325,85 Z"/>
+            
+            <!-- SOUTH AMERICA -->
+            <path d="M 240,320 L 275,315 L 295,335 Q 310,365 305,395 L 295,425 Q 285,450 265,460 L 245,455 L 225,440 L 220,415 L 222,385 Q 225,355 235,340 Z"/>
+            
+            <!-- EUROPE -->
+            <path d="M 450,85 L 480,75 Q 510,72 540,80 L 565,95 Q 575,115 565,135 L 545,145 L 510,148 L 480,142 L 460,128 L 452,108 Z"/>
+            
+            <!-- Scandinavia -->
+            <path d="M 485,50 L 520,45 L 545,60 Q 550,80 535,90 L 510,88 L 490,75 Z"/>
+            
+            <!-- UK -->
+            <path d="M 440,100 L 460,98 Q 470,108 467,122 L 455,128 L 442,118 Z"/>
+            
+            <!-- AFRICA -->
+            <path d="M 465,160 L 510,155 Q 550,158 580,172 L 600,200 Q 610,235 605,275 L 595,310 Q 580,345 555,370 L 525,385 L 495,382 L 470,365 Q 455,335 450,300 L 448,265 L 452,225 L 458,190 Z"/>
+            
+            <!-- Madagascar -->
+            <path d="M 605,310 L 615,315 L 618,335 Q 615,348 605,348 L 600,335 Z"/>
+            
+            <!-- RUSSIA / NORTH ASIA -->
+            <path d="M 540,45 L 620,42 Q 700,40 780,45 L 850,55 Q 880,68 880,90 L 870,108 L 800,112 L 720,108 L 640,100 L 570,90 L 545,75 Z"/>
+            
+            <!-- MIDDLE EAST -->
+            <path d="M 555,150 L 595,155 Q 615,175 612,200 L 600,220 L 575,225 Q 555,215 550,195 L 552,170 Z"/>
+            
+            <!-- INDIA -->
+            <path d="M 658,200 L 695,200 Q 720,215 730,242 L 728,278 Q 720,295 700,305 L 680,303 L 660,288 L 650,260 L 654,225 Z"/>
+            
+            <!-- CHINA -->
+            <path d="M 715,135 L 780,128 Q 820,135 835,160 L 832,185 Q 820,205 795,210 L 755,205 L 720,190 L 710,165 Z"/>
+            
+            <!-- SOUTHEAST ASIA -->
+            <path d="M 760,225 L 810,225 Q 825,240 820,265 L 810,278 L 785,278 L 765,265 Z"/>
+            
+            <!-- INDONESIA -->
+            <path d="M 805,290 L 850,288 Q 880,295 885,315 L 875,325 L 835,325 L 810,318 Z"/>
+            
+            <!-- JAPAN -->
+            <path d="M 858,148 L 875,148 Q 882,165 878,180 L 868,182 L 860,170 Z"/>
+            
+            <!-- AUSTRALIA -->
+            <path d="M 795,360 L 855,355 Q 890,365 900,395 L 885,425 L 845,430 L 805,418 Q 790,400 790,380 Z"/>
+            
+            <!-- NEW ZEALAND -->
+            <path d="M 910,425 L 925,430 Q 932,442 925,455 L 912,452 L 906,440 Z"/>
+            
+          </g>
+
+          <!-- Country markers with pulsing animation -->
+          <g class="map-dots">
+            <!-- India -->
+            <circle cx="690" cy="250" r="6" fill="#ff00cc" filter="url(#mapGlow)">
+              <animate attributeName="r" values="6;10;6" dur="2.4s" repeatCount="indefinite"/>
+            </circle>
+            <!-- USA -->
+            <circle cx="195" cy="160" r="6" fill="#00ccff" filter="url(#mapGlow)">
+              <animate attributeName="r" values="6;10;6" dur="2.6s" repeatCount="indefinite"/>
+            </circle>
+            <!-- Canada -->
+            <circle cx="215" cy="115" r="5" fill="#00ff99" filter="url(#mapGlow)">
+              <animate attributeName="r" values="5;8;5" dur="2.8s" repeatCount="indefinite"/>
+            </circle>
+            <!-- Mexico -->
+            <circle cx="207" cy="298" r="5" fill="#ff4d00" filter="url(#mapGlow)">
+              <animate attributeName="r" values="5;8;5" dur="3s" repeatCount="indefinite"/>
+            </circle>
+            <!-- Brazil -->
+            <circle cx="265" cy="385" r="5" fill="#00ff99" filter="url(#mapGlow)">
+              <animate attributeName="r" values="5;8;5" dur="2.7s" repeatCount="indefinite"/>
+            </circle>
+            <!-- UK -->
+            <circle cx="453" cy="112" r="5" fill="#cc00ff" filter="url(#mapGlow)">
+              <animate attributeName="r" values="5;8;5" dur="2.5s" repeatCount="indefinite"/>
+            </circle>
+            <!-- Germany -->
+            <circle cx="505" cy="118" r="5" fill="#ffee00" filter="url(#mapGlow)">
+              <animate attributeName="r" values="5;8;5" dur="3.1s" repeatCount="indefinite"/>
+            </circle>
+            <!-- France -->
+            <circle cx="475" cy="128" r="4" fill="#ff00cc" filter="url(#mapGlow)">
+              <animate attributeName="r" values="4;7;4" dur="2.9s" repeatCount="indefinite"/>
+            </circle>
+            <!-- Russia -->
+            <circle cx="700" cy="75" r="5" fill="#00ccff" filter="url(#mapGlow)">
+              <animate attributeName="r" values="5;8;5" dur="2.4s" repeatCount="indefinite"/>
+            </circle>
+            <!-- Nigeria -->
+            <circle cx="520" cy="285" r="5" fill="#ff4d00" filter="url(#mapGlow)">
+              <animate attributeName="r" values="5;8;5" dur="3.2s" repeatCount="indefinite"/>
+            </circle>
+            <!-- South Africa -->
+            <circle cx="540" cy="375" r="5" fill="#cc00ff" filter="url(#mapGlow)">
+              <animate attributeName="r" values="5;8;5" dur="3.4s" repeatCount="indefinite"/>
+            </circle>
+            <!-- UAE -->
+            <circle cx="590" cy="195" r="5" fill="#ffee00" filter="url(#mapGlow)">
+              <animate attributeName="r" values="5;8;5" dur="2.3s" repeatCount="indefinite"/>
+            </circle>
+            <!-- China -->
+            <circle cx="775" cy="170" r="6" fill="#cc00ff" filter="url(#mapGlow)">
+              <animate attributeName="r" values="6;10;6" dur="2.2s" repeatCount="indefinite"/>
+            </circle>
+            <!-- Japan -->
+            <circle cx="866" cy="165" r="5" fill="#ff00cc" filter="url(#mapGlow)">
+              <animate attributeName="r" values="5;8;5" dur="2.7s" repeatCount="indefinite"/>
+            </circle>
+            <!-- South Korea -->
+            <circle cx="835" cy="170" r="4" fill="#00ccff" filter="url(#mapGlow)">
+              <animate attributeName="r" values="4;7;4" dur="2.5s" repeatCount="indefinite"/>
+            </circle>
+            <!-- Indonesia -->
+            <circle cx="835" cy="308" r="5" fill="#ffee00" filter="url(#mapGlow)">
+              <animate attributeName="r" values="5;8;5" dur="2.6s" repeatCount="indefinite"/>
+            </circle>
+            <!-- Singapore -->
+            <circle cx="790" cy="278" r="4" fill="#00ff99" filter="url(#mapGlow)">
+              <animate attributeName="r" values="4;7;4" dur="2.3s" repeatCount="indefinite"/>
+            </circle>
+            <!-- Australia -->
+            <circle cx="850" cy="395" r="5" fill="#ff00cc" filter="url(#mapGlow)">
+              <animate attributeName="r" values="5;8;5" dur="3.1s" repeatCount="indefinite"/>
+            </circle>
+            <!-- New Zealand -->
+            <circle cx="918" cy="442" r="4" fill="#00ff99" filter="url(#mapGlow)">
+              <animate attributeName="r" values="4;7;4" dur="2.8s" repeatCount="indefinite"/>
+            </circle>
+            <!-- Turkey -->
+            <circle cx="560" cy="160" r="4" fill="#ff4d00" filter="url(#mapGlow)">
+              <animate attributeName="r" values="4;7;4" dur="3s" repeatCount="indefinite"/>
+            </circle>
+          </g>
+        </svg>
+      </div>
+      <div class="country-list">
+        <div class="country-pill">🇮🇳 India · 842</div>
+        <div class="country-pill">🇺🇸 USA · 421</div>
+        <div class="country-pill">🇬🇧 UK · 287</div>
+        <div class="country-pill">🇧🇷 Brazil · 198</div>
+        <div class="country-pill">🇨🇳 China · 167</div>
+        <div class="country-pill">🇩🇪 Germany · 142</div>
+        <div class="country-pill">🇦🇪 UAE · 124</div>
+        <div class="country-pill">🇳🇬 Nigeria · 98</div>
+        <div class="country-pill">🇨🇦 Canada · 87</div>
+        <div class="country-pill">🇦🇺 Australia · 76</div>
+        <div class="country-pill">🇯🇵 Japan · 64</div>
+        <div class="country-pill">+ 36 more</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="section-wrap" style="max-width:840px;">
+    <div class="section-label">❓ FAQ</div>
+    <h2 class="section-title">Questions?<br>Answers.</h2>
+    <div class="faq-list">
+      <div class="faq-item open"><div class="faq-q">When will NOVEXA launch? <div class="faq-icon">+</div></div><div class="faq-a">NOVEXA Token launches Q3 2027 on PancakeSwap. Join waitlist for early-bird bonuses & exclusive airdrops.</div></div>
+      <div class="faq-item"><div class="faq-q">What is NOVEXA Token? <div class="faq-icon">+</div></div><div class="faq-a">BEP20 crypto token powering the NOVEXA Binary MLM platform. Holders earn via staking, yield farming & referrals.</div></div>
+      <div class="faq-item"><div class="faq-q">How do I join waitlist? <div class="faq-icon">+</div></div><div class="faq-a">Enter your email above. Get launch alerts, early-bird access, and $50 airdrop on launch day. First 1000 get 10% bonus.</div></div>
+      <div class="faq-item"><div class="faq-q">Will it be audited? <div class="faq-icon">+</div></div><div class="faq-a">Yes! CertiK security audit in progress. Full report published before launch. Targeting 95+/100 score.</div></div>
+      <div class="faq-item"><div class="faq-q">Total supply? <div class="faq-icon">+</div></div><div class="faq-a">100,000,000 NOVEXA fixed supply. No more tokens minted. 2% auto-burn per transaction reduces supply.</div></div>
+      <div class="faq-item"><div class="faq-q">Is MLM platform live? <div class="faq-icon">+</div></div><div class="faq-a">Yes! Live at novexa.org.in. Join now & start earning. Token launch integrates with platform for extra rewards.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section>
+  <div class="section-wrap">
+    <div class="cta-box">
+      <h2>Don't miss<br>the launch.</h2>
+      <p>Be early. Be smart. Be NOVEXA. Get notified the moment we go live.</p>
+      <div class="subscribe-form">
+        <input type="email" class="subscribe-input" placeholder="your@email.com">
+        <button class="subscribe-btn">🔔 Notify Me</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="footer-logo">
+        <div class="logo-ring">
+          <div class="logo-ring-inner"><span>N</span></div>
+        </div>
+        <div class="footer-brand-text">NOVEXA</div>
+      </div>
+      <p class="footer-tagline">The most anticipated crypto launch of 2027. Going live Q3 2027.</p>
+      <div class="social">
+        <a href="#">🐦</a><a href="#">✈️</a><a href="#">💬</a><a href="#">📺</a><a href="#">📝</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Project</h4>
+      <ul>
+        <li><a href="#roadmap">Roadmap</a></li>
+        <li><a href="#tokenomics">Tokenomics</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Connect</h4>
+      <ul>
+        <li><a href="https://novexa.org.in">MLM Platform</a></li>
+        <li><a href="#waitlist">Join Waitlist</a></li>
+        <li><a href="#">Whitepaper</a></li>
+        <li><a href="#">Support</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div>© 2027 NOVEXA · Pre-Launch · BEP20</div>
+    <div class="legal">
+      <a href="#">Terms</a><a href="#">Privacy</a><a href="https://novexa.org.in">novexa.org.in</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* Particles */
+(function(){
+  const c=document.getElementById('particles');
+  const ctx=c.getContext('2d');
+  let W,H;
+  function resize(){W=c.width=window.innerWidth;H=c.height=window.innerHeight;}
+  resize();window.addEventListener('resize',resize);
+  const isMobile=window.innerWidth<768;
+  const count=isMobile?60:140;
+  const cols=['#ff00cc','#ff4d00','#ffee00','#00ff99','#00ccff','#cc00ff','#fff'];
+  const stars=Array.from({length:count},()=>({
+    x:Math.random()*W,y:Math.random()*H,
+    r:Math.random()*1.4+0.15,
+    a:Math.random(),da:(Math.random()-0.5)*0.015,
+    vx:(Math.random()-0.5)*0.1,vy:(Math.random()-0.5)*0.1,
+    col:cols[Math.floor(Math.random()*cols.length)]
+  }));
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    stars.forEach(s=>{
+      s.a+=s.da;if(s.a<=0||s.a>=1)s.da*=-1;
+      s.x+=s.vx;s.y+=s.vy;
+      if(s.x<0)s.x=W;if(s.x>W)s.x=0;
+      if(s.y<0)s.y=H;if(s.y>H)s.y=0;
+      ctx.globalAlpha=Math.max(0,Math.min(1,s.a))*0.7;
+      ctx.fillStyle=s.col;
+      ctx.shadowBlur=6;ctx.shadowColor=s.col;
+      ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fill();
+    });
+    ctx.shadowBlur=0;
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* Market Ticker */
+(function(){
+  const track=document.getElementById('marketTrack');
+  if(!track)return;
+  const coins=[
+    {sym:'BTC',price:96420.50,change:2.34,color:'#F7931A',icon:'₿'},
+    {sym:'ETH',price:3285.20,change:1.85,color:'#627EEA',icon:'Ξ'},
+    {sym:'BNB',price:692.40,change:0.92,color:'#F3BA2F',icon:'B'},
+    {sym:'SOL',price:198.75,change:4.21,color:'#9945FF',icon:'S'},
+    {sym:'XRP',price:2.42,change:-1.32,color:'#23292F',icon:'X'},
+    {sym:'NOVEXA',isNovexa:true},
+    {sym:'ADA',price:0.9450,change:3.12,color:'#0033AD',icon:'A'},
+    {sym:'DOGE',price:0.3825,change:-0.78,color:'#C2A633',icon:'D'},
+    {sym:'AVAX',price:42.30,change:2.95,color:'#E84142',icon:'A'},
+    {sym:'DOT',price:8.92,change:1.45,color:'#E6007A',icon:'●'},
+    {sym:'MATIC',price:0.5240,change:5.67,color:'#8247E5',icon:'M'}
+  ];
+  function fmt(p){
+    if(p>=1000)return '$'+p.toLocaleString('en-US',{maximumFractionDigits:2});
+    if(p>=1)return '$'+p.toFixed(2);
+    return '$'+p.toFixed(4);
+  }
+  function buildItem(c){
+    if(c.isNovexa){
+      return '<a href="#waitlist" class="coin-item novexa">'+
+        '<div class="coin-icon"><div class="coin-icon-inner"><span>N</span></div></div>'+
+        '<span class="coin-symbol">NOVEXA</span>'+
+        '<span class="coin-soon"><span class="coin-soon-dot"></span>Coming Soon</span>'+
+        '</a>';
+    }
+    const ud=c.change>=0?'up':'down';
+    const sign=c.change>=0?'+':'';
+    return '<div class="coin-item">'+
+      '<div class="coin-icon" style="background:'+c.color+';">'+c.icon+'</div>'+
+      '<span class="coin-symbol">'+c.sym+'</span>'+
+      '<span class="coin-price" data-sym="'+c.sym+'">'+fmt(c.price)+'</span>'+
+      '<span class="coin-change '+ud+'" data-symc="'+c.sym+'">'+sign+c.change.toFixed(2)+'%</span>'+
+      '</div>';
+  }
+  let html='';
+  for(let i=0;i<2;i++){coins.forEach(c=>{html+=buildItem(c);});}
+  track.innerHTML=html;
+  
+  setInterval(function(){
+    coins.forEach(c=>{
+      if(c.isNovexa)return;
+      const vol=c.price>1000?5:c.price>1?0.05:0.005;
+      const delta=(Math.random()-0.5)*vol;
+      c.price=Math.max(c.price*0.95,c.price+delta);
+      c.change+=(Math.random()-0.5)*0.3;
+      c.change=Math.max(-15,Math.min(15,c.change));
+      document.querySelectorAll('[data-sym="'+c.sym+'"]').forEach(el=>{
+        const prev=parseFloat(el.textContent.replace(/[$,]/g,''));
+        const isUp=c.price>prev;
+        el.textContent=fmt(c.price);
+        el.classList.remove('up','down');
+        void el.offsetWidth;
+        el.classList.add(isUp?'up':'down');
+      });
+      document.querySelectorAll('[data-symc="'+c.sym+'"]').forEach(el=>{
+        const sign=c.change>=0?'+':'';
+        el.textContent=sign+c.change.toFixed(2)+'%';
+        el.classList.remove('up','down');
+        el.classList.add(c.change>=0?'up':'down');
+      });
+    });
+  },3000);
+})();
+
+/* Countdown */
+(function(){
+  const launch=new Date('2027-09-01T00:00:00Z').getTime();
+  function tick(){
+    const diff=launch-Date.now();
+    if(diff<=0)return;
+    const d=Math.floor(diff/(1000*60*60*24));
+    const h=Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+    const m=Math.floor((diff%(1000*60*60))/(1000*60));
+    const s=Math.floor((diff%(1000*60))/1000);
+    document.getElementById('days').textContent=String(d).padStart(3,'0');
+    document.getElementById('hours').textContent=String(h).padStart(2,'0');
+    document.getElementById('mins').textContent=String(m).padStart(2,'0');
+    document.getElementById('secs').textContent=String(s).padStart(2,'0');
+  }
+  tick();setInterval(tick,1000);
+})();
+
+/* FAQ */
+document.querySelectorAll('.faq-q').forEach(q=>{
+  q.addEventListener('click',()=>{q.parentElement.classList.toggle('open');});
+});
+
+/* Drawer */
+(function(){
+  const btn=document.getElementById('menuBtn');
+  const close=document.getElementById('drawerClose');
+  const drawer=document.getElementById('mobileDrawer');
+  const overlay=document.getElementById('drawerOverlay');
+  function open(){drawer.classList.add('open');overlay.classList.add('show');document.body.style.overflow='hidden';}
+  function shut(){drawer.classList.remove('open');overlay.classList.remove('show');document.body.style.overflow='';}
+  btn.addEventListener('click',open);
+  close.addEventListener('click',shut);
+  overlay.addEventListener('click',shut);
+  drawer.querySelectorAll('a').forEach(a=>a.addEventListener('click',shut));
+})();
+
+/* Top bar hide on scroll */
+(function(){
+  let last=0;
+  const bar=document.getElementById('topBar');
+  window.addEventListener('scroll',()=>{
+    const y=window.scrollY;
+    if(y>last&&y>100)bar.classList.add('hidden');
+    else bar.classList.remove('hidden');
+    last=y;
+  });
+})();
+
+/* Subscribe */
+document.querySelectorAll('.subscribe-form').forEach(f=>{
+  f.querySelector('.subscribe-btn').addEventListener('click',function(e){
+    e.preventDefault();
+    const input=f.querySelector('.subscribe-input');
+    if(input.value && input.value.includes('@')){
+      const orig=this.textContent;
+      this.textContent='✅ Joined!';
+      input.value='';
+      setTimeout(()=>{this.textContent=orig;},2500);
+    }
+  });
+});
+
+/* Theme Switcher */
+(function(){
+  const btns=document.querySelectorAll('.theme-btn');
+  btns.forEach(b=>b.addEventListener('click',()=>{
+    btns.forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    const theme=b.dataset.theme;
+    if(theme==='dark') document.body.removeAttribute('data-theme');
+    else document.body.setAttribute('data-theme',theme);
+  }));
+})();
+
+
+
+</script>
+</body>
+</html>
